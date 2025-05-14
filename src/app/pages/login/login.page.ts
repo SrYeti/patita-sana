@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, FormsModule]
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
+  email = '';
+  password = '';
 
-  constructor() { }
-
-  ngOnInit() {
+  onLogin() {
+    // Aquí irá la lógica de autenticación
+    console.log('Login:', this.email, this.password);
   }
 
+  onLoginWithGoogle() {
+    // Aquí irá la lógica para login con Google
+    console.log('Login con Google');
+  }
 }
