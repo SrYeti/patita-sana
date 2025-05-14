@@ -22,5 +22,21 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
+  },
+  {
+    path: 'add-pet',
+    loadComponent: () => import('./pages/add-pet/add-pet.page').then( m => m.AddPetPage)
+  },
+  {
+    path: 'pet-detail',
+    loadComponent: () => import('./pages/pet-detail/pet-detail.page').then( m => m.PetDetailPage)
+  },
+  {
+    path: 'edit-pet',
+    loadComponent: () => import('./pages/edit-pet/edit-pet.page').then( m => m.EditPetPage)
   }
 ];
