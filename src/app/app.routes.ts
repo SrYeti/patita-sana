@@ -15,11 +15,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/not-found/not-found.page').then( m => m.NotFoundPage)
   },
   {
-    path: '**',
-    redirectTo: 'not-found',
-    pathMatch: 'full',
-  },
-  {
     path: 'register',
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
   },
@@ -38,5 +33,11 @@ export const routes: Routes = [
   {
     path: 'edit-pet',
     loadComponent: () => import('./pages/edit-pet/edit-pet.page').then( m => m.EditPetPage)
-  }
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
+    pathMatch: 'full',
+  },
+  
 ];

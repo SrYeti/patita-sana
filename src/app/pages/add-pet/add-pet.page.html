@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>add-pet</ion-title>
+    <ion-title>Añadir Mascota</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">add-pet</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form (ngSubmit)="onAddPet()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Número de Ficha</ion-label>
+      <ion-input type="text" [(ngModel)]="fichaNumero" name="fichaNumero"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Edad</ion-label>
+      <ion-input type="number" [(ngModel)]="edad" name="edad" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Sexo</ion-label>
+      <ion-select [(ngModel)]="sexo" name="sexo" required>
+        <ion-select-option value="Macho">Macho</ion-select-option>
+        <ion-select-option value="Hembra">Hembra</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Peso (kg)</ion-label>
+      <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Foto</ion-label>
+      <input type="file" (change)="onFotoSelected($event)" accept="image/*" />
+    </ion-item>
+    <ion-item>
+      <ion-label>Adjuntar Ficha (PDF)</ion-label>
+      <input type="file" (change)="onFichaSelected($event)" accept="application/pdf" />
+    </ion-item>
+    <ion-button expand="block" type="submit">Guardar Mascota</ion-button>
+  </form>
 </ion-content>
