@@ -8,11 +8,11 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./pages/login/login.page').then( m => m.LoginPage)
   },
   {
     path: 'not-found',
-    loadComponent: () => import('./not-found/not-found.page').then( m => m.NotFoundPage)
+    loadComponent: () => import('./pages/not-found/not-found.page').then( m => m.NotFoundPage)
   },
   {
     path: '**',
@@ -21,7 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
+    loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
   },
   {
     path: 'home',
