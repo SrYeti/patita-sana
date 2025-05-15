@@ -47,6 +47,10 @@ export class HomePage implements OnInit {
     this.router.navigate(['/add-pet']);
   }
 
+  verDetalleMascota(id: string) {
+    this.router.navigate(['/pet-detail', id]);
+  }
+
   async logout() {
     await signOut(this.auth);
     this.router.navigate(['/login']);

@@ -8,7 +8,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let mascota of mascotas">
-        <ion-card>
+        <ion-card (click)="verDetalleMascota(mascota.id)" style="cursor:pointer;">
           <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" style="width: 100%; height: 120px; object-fit: cover;">
           <ion-card-header>
             <ion-card-title>{{ mascota.nombre }}</ion-card-title>
