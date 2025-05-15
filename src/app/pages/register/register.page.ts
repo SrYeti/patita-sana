@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-register',
@@ -47,4 +48,14 @@ export class RegisterPage {
     toast.present();
   }
   
+  async onRegisterWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(this.auth, provider);
+      this.showToast('Registro con Google exitoso');
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      this.showToast(error.message || 'Error con Google');
+    }
+  }
 }

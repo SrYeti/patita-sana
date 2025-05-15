@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -30,9 +30,14 @@ export class LoginPage {
     }
   }
 
-  onLoginWithGoogle() {
-    // Aquí irá la lógica para login con Google
-    console.log('Login con Google');
+  async onLoginWithGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(this.auth, provider);
+      this.router.navigate(['/home']);
+    } catch (error: any) {
+      this.showToast(error.message || 'Error con Google');
+    }
   }
 
   async showToast(message: string) {
