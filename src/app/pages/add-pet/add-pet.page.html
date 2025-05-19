@@ -30,8 +30,8 @@
       <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Foto (no disponible en versión demo)</ion-label>
-      <input type="file" accept="image/*" disabled />
+      <ion-label>Foto de la mascota</ion-label>
+      <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
     </ion-item>
     <ion-item>
       <ion-label>Adjuntar Ficha (PDF) (no disponible en versión demo)</ion-label>

@@ -70,3 +70,4 @@ testem.log
 Thumbs.db
 
 src/environments/firebase-config.ts
+src/environments/supabase-client.ts
