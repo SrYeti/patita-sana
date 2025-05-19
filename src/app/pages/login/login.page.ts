@@ -38,4 +38,8 @@ export class LoginPage {
     });
     toast.present();
   }
+
+  goToRegister() {
+  this.router.navigate(['/register']);
+  }
 }

@@ -36,6 +36,12 @@ export class HomePage implements OnInit {
     }
   }
 
+  async ionViewWillEnter() {
+    if (this.userId) {
+      await this.cargarMascotas();
+    }
+  }
+
   async cargarMascotas() {
     if (!this.userId) return;
     this.mascotas = await this.petService.getMascotas(this.userId);
