@@ -23,6 +23,14 @@ export class PetDetailPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    await this.cargarMascota();
+  }
+
+  async ionViewWillEnter() {
+    await this.cargarMascota();
+  }
+
+  private async cargarMascota() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.mascota = await this.petService.getMascotaById(id);
@@ -43,5 +51,9 @@ export class PetDetailPage implements OnInit {
   agregarDocumento() {
     // Aquí luego puedes abrir el flujo para subir documentos
     // this.router.navigate(['/add-document', this.mascota?.id]);
+  }
+
+  volverAHome() {
+    this.router.navigate(['/home']);
   }
 }

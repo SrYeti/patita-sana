@@ -36,4 +36,13 @@ export class PetService {
     }
     return data as Pet;
   }
+
+  // Actualizar mascota
+  async updatePet(id: string, pet: Partial<Pet>): Promise<void> {
+    const { error } = await supabase
+      .from('mascotas')
+      .update(pet)
+      .eq('id', id);
+    if (error) throw error;
+  }
 }
