@@ -15,8 +15,9 @@
       <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
     </ion-item>
     <ion-button expand="block" type="submit">Entrar</ion-button>
-    <ion-button expand="block" fill="outline" type="button" (click)="onLoginWithGoogle()">
-      Iniciar con Google
-    </ion-button>
   </form>
+  <div style="text-align:center; margin-top: 16px;">
+    No eres miembro?
+    <a style="color: var(--ion-color-primary); cursor: pointer;" (click)="goToRegister()">Regístrate ahora</a>
+  </div>
 </ion-content>

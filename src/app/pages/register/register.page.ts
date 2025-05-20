@@ -3,8 +3,7 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { SupabaseAuthService } from '../../services/supabase-auth.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +19,7 @@ export class RegisterPage {
   confirmPassword = '';
 
   constructor(
-    private auth: Auth,
+    private supabaseAuth: SupabaseAuthService,
     private router: Router,
     private toastCtrl: ToastController
   ) {}
@@ -31,8 +30,8 @@ export class RegisterPage {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(this.auth, this.email, this.password);
-      this.showToast('Registro exitoso');
+      await this.supabaseAuth.signUp(this.email, this.password);
+      this.showToast('Registro exitoso. Revisa tu correo para confirmar.');
       this.router.navigate(['/login']);
     } catch (error: any) {
       this.showToast(error.message || 'Error al registrar');
@@ -46,16 +45,5 @@ export class RegisterPage {
       color: 'danger'
     });
     toast.present();
-  }
-  
-  async onRegisterWithGoogle() {
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(this.auth, provider);
-      this.showToast('Registro con Google exitoso');
-      this.router.navigate(['/home']);
-    } catch (error: any) {
-      this.showToast(error.message || 'Error con Google');
-    }
   }
 }
