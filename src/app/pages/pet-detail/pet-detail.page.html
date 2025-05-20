@@ -1,13 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>pet-detail</ion-title>
+    <ion-title>Detalle de Mascota</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pet-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-card *ngIf="mascota">
+    <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" alt="Foto de la mascota" />
+    <ion-card-header>
+      <ion-card-title>{{ mascota.nombre }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>Edad: {{ mascota.edad }} meses</div>
+      <div>Sexo: {{ mascota.sexo }}</div>
+      <div>Peso: {{ mascota.peso }} kg</div>
+      <div>N° ficha: {{ mascota.fichaNumero }}</div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="editarMascota()">Editar datos</ion-button>
+
+  <ion-text>
+    <h2>Archivos</h2>
+  </ion-text>
+  <ion-button expand="block" (click)="verDocumentos()">Ver documentos</ion-button>
+  <ion-button expand="block" (click)="agregarDocumento()">Agregar documento</ion-button>
 </ion-content>

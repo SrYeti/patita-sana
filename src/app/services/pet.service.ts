@@ -21,4 +21,19 @@ export class PetService {
     if (error) throw error;
     return data as Pet[];
   }
+
+  // Obtener una mascota por su id
+  async getMascotaById(id: string): Promise<Pet | null> {
+    const { data, error } = await supabase
+      .from('mascotas')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error('Error al obtener mascota:', error);
+      return null;
+    }
+    return data as Pet;
+  }
 }

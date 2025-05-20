@@ -33,10 +33,7 @@
       <ion-label>Foto de la mascota</ion-label>
       <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
     </ion-item>
-    <ion-item>
-      <ion-label>Adjuntar Ficha (PDF) (no disponible en versión demo)</ion-label>
-      <input type="file" accept="application/pdf" disabled />
-    </ion-item>
+    <!-- Eliminado el campo de PDF -->
     <ion-button expand="block" type="submit">Guardar Mascota</ion-button>
   </form>
 </ion-content>
