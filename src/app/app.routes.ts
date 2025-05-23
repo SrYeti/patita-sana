@@ -35,6 +35,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/edit-pet/edit-pet.page').then(m => m.EditPetPage)
   },
   {
+    path: 'reset-password',
+    loadComponent: () => import('./pages/reset-password/reset-password.page').then( m => m.ResetPasswordPage)
+  },
+  {
     path: '**',
     redirectTo: 'not-found',
     pathMatch: 'full',

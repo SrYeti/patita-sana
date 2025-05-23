@@ -27,4 +27,10 @@ export class SupabaseAuthService {
   getCurrentUser() {
     return supabase.auth.getUser();
   }
+
+  async resetPassword(email: string) {
+    return await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/reset-password'
+    });
+  }
 }

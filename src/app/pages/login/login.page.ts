@@ -42,4 +42,18 @@ export class LoginPage {
   goToRegister() {
   this.router.navigate(['/register']);
   }
+
+  async resetPassword() {
+    if (!this.email) {
+      this.showToast('Por favor ingresa tu correo para recuperar la contraseña');
+      return;
+    }
+    try {
+      const { error } = await this.supabaseAuth.resetPassword(this.email);
+      if (error) throw error;
+      this.showToast('Se envió un correo para restablecer tu contraseña');
+    } catch (error: any) {
+      this.showToast(error.message || 'Error al enviar el correo de recuperación');
+    }
+  }
 }
