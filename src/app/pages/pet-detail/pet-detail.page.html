@@ -12,7 +12,7 @@
   <ion-card *ngIf="mascota">
     <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" alt="Foto de la mascota" />
     <ion-card-header>
-      <ion-card-title>{{ mascota.nombre }}</ion-card-title>
+      <ion-card-title>{{ mascota.nombre | capitalize }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div>Edad: {{ mascota.edad }} meses</div>

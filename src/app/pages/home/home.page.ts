@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { Pet } from '../../models/pet.model';
 import { PetService } from '../../services/pet.service';
 import { SupabaseAuthService } from '../../services/supabase-auth.service';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, CapitalizePipe]
 })
 export class HomePage implements OnInit {
   mascotas: Pet[] = [];
