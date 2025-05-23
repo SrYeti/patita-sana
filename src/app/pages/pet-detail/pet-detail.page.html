@@ -15,7 +15,7 @@
       <ion-card-title>{{ mascota.nombre | capitalize }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div>Edad: {{ mascota.edad }} meses</div>
+      <div>Edad: {{ calcularEdad(mascota.fechaNacimiento) }}</div>
       <div>Sexo: {{ mascota.sexo }}</div>
       <div>Peso: {{ mascota.peso }} kg</div>
       <div>N° ficha: {{ mascota.fichaNumero }}</div>

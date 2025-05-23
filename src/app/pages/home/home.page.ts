@@ -60,4 +60,20 @@ export class HomePage implements OnInit {
     await this.supabaseAuth.signOut();
     this.router.navigate(['/login']);
   }
+
+  // ...existing code...
+
+  calcularAnios(fechaNacimiento: string): number {
+    if (!fechaNacimiento) return 0;
+    const nacimiento = new Date(fechaNacimiento);
+    const hoy = new Date();
+    let años = hoy.getFullYear() - nacimiento.getFullYear();
+    const m = hoy.getMonth() - nacimiento.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+      años--;
+    }
+    return años;
+  }
+
+// ...existing code...
 }

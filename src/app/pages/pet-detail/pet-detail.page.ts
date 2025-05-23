@@ -57,4 +57,18 @@ export class PetDetailPage implements OnInit {
   volverAHome() {
     this.router.navigate(['/home']);
   }
+
+  calcularEdad(fechaNacimiento: string): string {
+    if (!fechaNacimiento) return '';
+    const nacimiento = new Date(fechaNacimiento);
+    const hoy = new Date();
+    let años = hoy.getFullYear() - nacimiento.getFullYear();
+    let meses = hoy.getMonth() - nacimiento.getMonth();
+
+    if (meses < 0) {
+      años--;
+      meses += 12;
+    }
+    return `${años} años ${meses} meses`;
+  }
 }

@@ -17,7 +17,7 @@ export class EditPetPage implements OnInit {
   mascota: Pet | null = null;
   nombre = '';
   fichaNumero = '';
-  edad: number | null = null;
+  fechaNacimiento: string = '';
   sexo = '';
   peso: number | null = null;
 
@@ -35,7 +35,7 @@ export class EditPetPage implements OnInit {
       if (this.mascota) {
         this.nombre = this.mascota.nombre;
         this.fichaNumero = this.mascota.fichaNumero ?? '';
-        this.edad = this.mascota.edad;
+        this.fechaNacimiento = this.mascota.fechaNacimiento ?? '';
         this.sexo = this.mascota.sexo;
         this.peso = this.mascota.peso ?? null;
       }
@@ -48,7 +48,7 @@ export class EditPetPage implements OnInit {
       await this.petService.updatePet(this.mascota.id, {
         nombre: this.nombre,
         fichaNumero: this.fichaNumero,
-        edad: this.edad ?? 0,
+        fechaNacimiento: this.fechaNacimiento,
         sexo: this.sexo,
         peso: this.peso ?? 0
       });

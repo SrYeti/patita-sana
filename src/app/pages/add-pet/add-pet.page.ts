@@ -16,7 +16,7 @@ import { supabase } from '../../../environments/supabase-client';
 export class AddPetPage {
   nombre = '';
   fichaNumero = '';
-  edad: number | null = null;
+  fechaNacimiento: string = ''; // Cambiado aquí
   sexo = '';
   peso: number | null = null;
   fotoFile: File | null = null;
@@ -63,7 +63,7 @@ export class AddPetPage {
       await this.petService.addPet({
         nombre: this.nombre,
         fichaNumero: this.fichaNumero,
-        edad: this.edad ?? 0,
+        fechaNacimiento: this.fechaNacimiento, // Cambiado aquí
         sexo: this.sexo,
         peso: this.peso ?? 0,
         fotoUrl: fotoUrl ?? undefined

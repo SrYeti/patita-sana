@@ -1,10 +1,10 @@
 export interface Pet {
   id: string;
   nombre: string;
-  edad: number;
+  fechaNacimiento: string; // Nueva propiedad (ISO string)
   sexo: string;
   peso?: number;
-  fotoUrl?: string;           // URL de la foto subida
+  fotoUrl?: string;
   fichaNumero?: string;
-  fichaArchivoUrl?: string;   // URL del PDF de la ficha
+  fichaArchivoUrl?: string;
 }
