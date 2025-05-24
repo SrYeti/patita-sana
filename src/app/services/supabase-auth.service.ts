@@ -4,8 +4,14 @@ import { supabase } from '../../environments/supabase-client';
 @Injectable({ providedIn: 'root' })
 export class SupabaseAuthService {
   // Registro de usuario
-  async signUp(email: string, password: string) {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+  async signUp(email: string, password: string, nombre: string) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { nombre }
+      }
+    });
     if (error) throw error;
     return data;
   }

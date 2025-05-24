@@ -18,6 +18,7 @@ import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 export class HomePage implements OnInit {
   mascotas: Pet[] = [];
   userId: string | null = null;
+  userName: string | null = null;
 
   constructor(
     private petService: PetService,
@@ -29,6 +30,8 @@ export class HomePage implements OnInit {
     const { data } = await this.supabaseAuth.getCurrentUser();
     if (data?.user) {
       this.userId = data.user.id;
+      // Obtener el nombre desde user_metadata
+      this.userName = data.user.user_metadata?.['nombre'] || 'Usuario';
       await this.cargarMascotas();
     } else {
       this.mascotas = [];
@@ -61,8 +64,6 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // ...existing code...
-
   calcularAnios(fechaNacimiento: string): number {
     if (!fechaNacimiento) return 0;
     const nacimiento = new Date(fechaNacimiento);
@@ -74,6 +75,4 @@ export class HomePage implements OnInit {
     }
     return años;
   }
-
-// ...existing code...
 }

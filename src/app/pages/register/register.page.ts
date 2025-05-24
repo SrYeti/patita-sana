@@ -25,12 +25,16 @@ export class RegisterPage {
   ) {}
 
   async onRegister() {
+    if (!this.nombre) {
+      this.showToast('El nombre es obligatorio');
+      return;
+    }
     if (this.password !== this.confirmPassword) {
       this.showToast('Las contraseñas no coinciden');
       return;
     }
     try {
-      await this.supabaseAuth.signUp(this.email, this.password);
+      await this.supabaseAuth.signUp(this.email, this.password, this.nombre);
       this.showToast('Registro exitoso. Revisa tu correo para confirmar.');
       this.router.navigate(['/login']);
     } catch (error: any) {
