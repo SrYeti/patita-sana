@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../models/pet.model';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
+import { supabase } from '../../../environments/supabase-client';
+
+// --- Función para limpiar el nombre del archivo ---
+function limpiarNombre(nombre: string): string {
+  return nombre
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quita tildes
+    .replace(/[^a-zA-Z0-9_-]/g, '_'); // solo letras, números, guion y guion bajo
+}
 
 @Component({
   selector: 'app-pet-detail',
@@ -16,19 +24,28 @@ import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 })
 export class PetDetailPage implements OnInit {
   mascota: Pet | null = null;
+  documentos: any[] = [];
+
+  seleccionando = false;
+  seleccionados = new Set<string>();
+
+  @ViewChild('pdfInput', { static: false }) pdfInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private route: ActivatedRoute,
     private petService: PetService,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController
   ) {}
 
   async ngOnInit() {
     await this.cargarMascota();
+    await this.cargarDocumentos();
   }
 
   async ionViewWillEnter() {
     await this.cargarMascota();
+    await this.cargarDocumentos();
   }
 
   private async cargarMascota() {
@@ -38,20 +55,130 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  private async cargarDocumentos() {
+    if (!this.mascota) return;
+    const { data, error } = await supabase
+      .from('documentos')
+      .select('*')
+      .eq('mascota_id', this.mascota.id)
+      .order('fecha_subida', { ascending: false });
+    if (!error && data) {
+      this.documentos = data;
+    }
+  }
+
+  abrirSelectorPDF() {
+    this.pdfInput.nativeElement.value = '';
+    this.pdfInput.nativeElement.click();
+  }
+
+  async onPDFSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (!file || !this.mascota) return;
+
+    // 1. Pedir nombre al usuario
+    let nombreUsuario = prompt('Escribe un nombre para el archivo (sin tildes ni espacios):', file.name.replace('.pdf', ''));
+    if (!nombreUsuario) return;
+    nombreUsuario = limpiarNombre(nombreUsuario);
+
+    const userId = this.mascota.user_id;
+    const mascotaId = this.mascota.id;
+    const filePath = `mascota_${mascotaId}/${Date.now()}_${nombreUsuario}.pdf`;
+
+    // 2. Subir el PDF a Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from('documentos-mascotas')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      this.showToast('Error al subir el PDF');
+      return;
+    }
+
+    // 3. Obtener la signed URL (válida por 1 hora)
+    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+      .from('documentos-mascotas')
+      .createSignedUrl(filePath, 60 * 60);
+
+    if (signedUrlError || !signedUrlData) {
+      this.showToast('Error al obtener la URL del PDF');
+      return;
+    }
+
+    const url = signedUrlData.signedUrl;
+
+    // 4. Guardar el registro en la tabla documentos
+    const { error: insertError } = await supabase
+      .from('documentos')
+      .insert([{
+        mascota_id: mascotaId,
+        user_id: userId,
+        nombre: nombreUsuario + '.pdf',
+        url: url
+      }]);
+
+    if (insertError) {
+      this.showToast('Error al guardar el documento');
+      return;
+    }
+
+    this.showToast('Documento subido correctamente');
+    await this.cargarDocumentos();
+  }
+
+  abrirPDF(url: string) {
+    window.open(url, '_blank');
+  }
+
+  // --- Selección múltiple y eliminación ---
+  onLongPress(docId: string) {
+    this.seleccionando = true;
+    this.toggleSeleccion(docId);
+  }
+
+  toggleSeleccion(docId: string) {
+    if (this.seleccionados.has(docId)) {
+      this.seleccionados.delete(docId);
+    } else {
+      this.seleccionados.add(docId);
+    }
+  }
+
+  cancelarSeleccion() {
+    this.seleccionando = false;
+    this.seleccionados.clear();
+  }
+
+  async eliminarSeleccionados() {
+    const docsAEliminar = this.documentos.filter(doc => this.seleccionados.has(doc.id));
+    for (const doc of docsAEliminar) {
+      // Extrae el path del archivo desde la URL firmada (signed URL)
+      const url = new URL(doc.url);
+      const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
+      const path = match ? decodeURIComponent(match[1]) : '';
+      if (path) {
+        await supabase.storage.from('documentos-mascotas').remove([path]);
+      }
+      await supabase.from('documentos').delete().eq('id', doc.id);
+    }
+    this.showToast('Archivos eliminados');
+    this.cancelarSeleccion();
+    await this.cargarDocumentos();
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      color: 'success'
+    });
+    toast.present();
+  }
+
   editarMascota() {
     if (this.mascota) {
       this.router.navigate(['/edit-pet', this.mascota.id]);
     }
-  }
-
-  verDocumentos() {
-    // Aquí luego puedes navegar a la página de documentos
-    // this.router.navigate(['/pet-documents', this.mascota?.id]);
-  }
-
-  agregarDocumento() {
-    // Aquí luego puedes abrir el flujo para subir documentos
-    // this.router.navigate(['/add-document', this.mascota?.id]);
   }
 
   volverAHome() {
@@ -70,5 +197,18 @@ export class PetDetailPage implements OnInit {
       meses += 12;
     }
     return `${años} años ${meses} meses`;
+  }
+
+  longPressTimeout: any = null;
+
+  startLongPress(docId: string, event: Event) {
+    this.longPressTimeout = setTimeout(() => {
+      this.seleccionando = true;
+      this.toggleSeleccion(docId);
+    }, 500); // 500 ms para long press
+  }
+
+  cancelLongPress() {
+    clearTimeout(this.longPressTimeout);
   }
 }

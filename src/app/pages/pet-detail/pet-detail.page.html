@@ -25,8 +25,44 @@
   <ion-button expand="block" (click)="editarMascota()">Editar datos</ion-button>
 
   <ion-text>
-    <h2>Archivos</h2>
+    <h2>Archivos médicos</h2>
   </ion-text>
-  <ion-button expand="block" (click)="verDocumentos()">Ver documentos</ion-button>
-  <ion-button expand="block" (click)="agregarDocumento()">Agregar documento</ion-button>
+
+  <ion-list *ngIf="documentos.length > 0">
+    <ion-item *ngFor="let doc of documentos"
+      (mousedown)="startLongPress(doc.id, $event)"
+      (touchstart)="startLongPress(doc.id, $event)"
+      (mouseup)="cancelLongPress()"
+      (mouseleave)="cancelLongPress()"
+      (touchend)="cancelLongPress()">
+      <ion-checkbox
+        *ngIf="seleccionando"
+        slot="start"
+        [checked]="seleccionados.has(doc.id)"
+        (ionChange)="toggleSeleccion(doc.id)">
+      </ion-checkbox>
+      <ion-label (click)="seleccionando ? toggleSeleccion(doc.id) : abrirPDF(doc.url)">
+        <div>{{ doc.nombre }}</div>
+        <div>{{ doc.fecha_subida | date:'short' }}</div>
+      </ion-label>
+      <ion-button *ngIf="!seleccionando" fill="clear" (click)="abrirPDF(doc.url)">
+        Ver PDF
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-text *ngIf="documentos.length === 0">
+    <p>No hay documentos subidos.</p>
+  </ion-text>
+
+  <ion-button expand="block" (click)="abrirSelectorPDF()">
+    Agregar documento PDF
+  </ion-button>
+  <input type="file" accept="application/pdf" hidden #pdfInput (change)="onPDFSelected($event)">
+
+  <ion-button *ngIf="seleccionando" color="danger" expand="block" (click)="eliminarSeleccionados()">
+    Eliminar seleccionados
+  </ion-button>
+  <ion-button *ngIf="seleccionando" expand="block" (click)="cancelarSeleccion()">
+    Cancelar
+  </ion-button>
 </ion-content>

@@ -1,10 +1,10 @@
 export interface Pet {
   id: string;
   nombre: string;
-  fechaNacimiento: string; // Nueva propiedad (ISO string)
   sexo: string;
-  peso?: number;
+  peso: number;
+  fichaNumero: string;
+  user_id: string; // <-- agrega esta línea
   fotoUrl?: string;
-  fichaNumero?: string;
-  fichaArchivoUrl?: string;
+  fechaNacimiento: string;
 }

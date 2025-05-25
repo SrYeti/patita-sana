@@ -66,7 +66,8 @@ export class AddPetPage {
         fechaNacimiento: this.fechaNacimiento, // Cambiado aquí
         sexo: this.sexo,
         peso: this.peso ?? 0,
-        fotoUrl: fotoUrl ?? undefined
+        fotoUrl: fotoUrl ?? undefined,
+        user_id: userId
       }, userId);
       this.showToast('Mascota guardada');
       this.router.navigate(['/home']);
