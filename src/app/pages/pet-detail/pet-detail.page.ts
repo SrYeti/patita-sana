@@ -211,4 +211,56 @@ export class PetDetailPage implements OnInit {
   cancelLongPress() {
     clearTimeout(this.longPressTimeout);
   }
+
+  async confirmarEliminarMascota() {
+    const confirm = window.confirm('¿Estás seguro de que deseas eliminar esta mascota? Se eliminarán todos sus archivos médicos.');
+    if (confirm) {
+      await this.eliminarMascota();
+    }
+  }
+
+  async eliminarMascota() {
+    if (!this.mascota) return;
+
+    // 1. Elimina todos los documentos de la mascota (de Storage y tabla)
+    const { data: docs } = await supabase
+      .from('documentos')
+      .select('*')
+      .eq('mascota_id', this.mascota.id);
+
+    if (docs && docs.length > 0) {
+      for (const doc of docs) {
+        // Extrae el path del archivo desde la URL firmada
+        const url = new URL(doc.url);
+        const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
+        const path = match ? decodeURIComponent(match[1]) : '';
+        if (path) {
+          await supabase.storage.from('documentos-mascotas').remove([path]);
+        }
+        await supabase.from('documentos').delete().eq('id', doc.id);
+      }
+    }
+
+    // 2. Elimina la foto de la mascota si existe
+    if (this.mascota.fotoUrl) {
+      try {
+        const fotoUrl = new URL(this.mascota.fotoUrl);
+        // Regex mejorado para buckets públicos y privados
+        const match = fotoUrl.pathname.match(/\/object\/(?:sign\/|public\/)?([a-zA-Z0-9-_]+)\/(.+)$/);
+        if (match) {
+          const bucket = match[1];
+          const path = decodeURIComponent(match[2]);
+          await supabase.storage.from(bucket).remove([path]);
+        }
+      } catch (e) {
+        // Si la foto no es de Supabase Storage, ignora
+      }
+    }
+
+    // 3. Elimina la mascota de la tabla mascotas
+    await supabase.from('mascotas').delete().eq('id', this.mascota.id);
+
+    this.showToast('Mascota eliminada');
+    this.router.navigate(['/home']);
+  }
 }
