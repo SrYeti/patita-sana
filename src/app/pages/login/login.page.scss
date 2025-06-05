@@ -1,0 +1,80 @@
+.input-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --border-color: #a4c084;
+  --highlight-color-focused: #a4c084;
+  margin-bottom: 20px;
+  overflow: visible; /* Esto es clave para que el label no se corte */
+}
+
+.input-label {
+  color: #666666 !important;
+  font-size: 14px !important;
+  margin-bottom: 5px;
+  transform-origin: left top !important;
+  white-space: nowrap; /* Evita que el label se parta en varias líneas */
+}
+
+/* Estado flotante del label */
+.item-label-floating.sc-ion-input-md-h,
+.item-label-floating.sc-ion-input-ios-h {
+  transform: translate3d(0, 0, 0) scale(0.75) !important;
+  margin-top: -8px !important;
+}
+
+/* Estado enfocado - Efecto matcha */
+.item-has-focus .input-label,
+.item-has-value .input-label {
+  color: var(--green-matcha) !important;
+}
+
+/* Estado enfocado del input */
+.item-has-focus .custom-input {
+  --border-color: var(--green-matcha-dark) !important;
+  box-shadow: 0 0 0 2px var(--green-matcha-light);
+}
+
+.custom-input {
+  --background: var(--white);
+  --color: var(--text-dark);
+  --padding-start: 15px !important;
+  --padding-end: 15px !important;
+  --padding-top: 12px !important;
+  --padding-bottom: 12px !important;
+  --border-radius: 10px !important;
+  --border-width: 1px !important;
+  --border-color: #a4c084 !important;
+  --border-style: solid !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-top: 8px; /* Espacio adicional para el label /
+transition: all 0.3s ease; / Transición suave para efectos */
+}
+
+/* Placeholder con estilo matcha */
+.custom-input::placeholder {
+  color: var(--text-light);
+  opacity: 0.8;
+}
+
+.all-content {
+  background-color: #f8f8f0;
+}
+
+.login-text {
+  color: #a4c084;
+  margin-left: 15px;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.login-button {
+  background-color: #a4c084;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
