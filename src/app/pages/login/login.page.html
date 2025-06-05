@@ -1,28 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding all-content">
+  <div class="all-content">
+    <div class="login-banner">
+      <img src="assets/perrio.jpg" alt="Login Banner" />
+      <div class="login-text">
+        <h1>Bienvenido!</h1>
+        <p>Inicia sesión para continuar</p>
+      </div>
+    </div>
 
-<ion-content class="ion-padding">
-  <form (ngSubmit)="onLogin()">
-    <ion-item>
-      <ion-label position="floating">Correo</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit">Entrar</ion-button>
-  </form>
+    <form (ngSubmit)="onLogin()">
+      <ion-item class="input-item">
+        <ion-label position="floating" class="input-label">Correo</ion-label>
+        <ion-input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          required
+          class="custom-input"
+        ></ion-input>
+      </ion-item>
+      <ion-item class="input-item">
+        <ion-label position="floating" class="input-label"
+          >Contraseña</ion-label
+        >
+        <ion-input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          class="custom-input"
+        ></ion-input>
+      </ion-item>
+      <div class="login-button">
+        <ion-button expand="block" type="submit">Entrar</ion-button>
+      </div>
+    </form>
 
-  <ion-button expand="block" fill="clear" (click)="resetPassword()" style="margin-top: 8px;">
-    ¿Olvidaste tu contraseña?
-  </ion-button>
+    <ion-button
+      expand="block"
+      fill="clear"
+      (click)="resetPassword()"
+      class="forgot-password"
+      style="margin-top: 8px"
+    >
+      ¿Olvidaste tu contraseña?
+    </ion-button>
 
-  <div style="text-align:center; margin-top: 16px;">
-    No eres miembro?
-    <a style="color: var(--ion-color-primary); cursor: pointer;" (click)="goToRegister()">Regístrate ahora</a>
+    <div style="text-align: center; margin-top: 16px">
+      No eres miembro?
+      <a
+        style="color: var(--green-matcha); cursor: pointer"
+        (click)="goToRegister()"
+        >Regístrate ahora</a
+      >
+    </div>
   </div>
 </ion-content>
