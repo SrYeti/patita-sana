@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  calcularEdad(fechaNacimiento: string): string {
+  calcularEdadHome(fechaNacimiento: string): string {
     if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);
     const hoy = new Date();
@@ -75,9 +75,6 @@ export class HomePage implements OnInit {
 
     if (dias < 0) {
       meses--;
-      // Suma los días del mes anterior
-      const mesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-      dias += mesAnterior.getDate();
     }
     if (meses < 0) {
       años--;
@@ -85,9 +82,9 @@ export class HomePage implements OnInit {
     }
 
     if (años > 0) {
-      return `${años} año${años > 1 ? 's' : ''} ${meses} mes${meses !== 1 ? 'es' : ''}`;
+      return `${años} año${años > 1 ? 's' : ''}`;
     } else {
-      return `${meses} mes${meses !== 1 ? 'es' : ''} ${dias} día${dias !== 1 ? 's' : ''}`;
+      return `${meses} mes${meses !== 1 ? 'es' : ''}`;
     }
   }
 }
