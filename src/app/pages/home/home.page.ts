@@ -64,15 +64,30 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  calcularAnios(fechaNacimiento: string): number {
-    if (!fechaNacimiento) return 0;
+  calcularEdad(fechaNacimiento: string): string {
+    if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);
     const hoy = new Date();
+
     let años = hoy.getFullYear() - nacimiento.getFullYear();
-    const m = hoy.getMonth() - nacimiento.getMonth();
-    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
-      años--;
+    let meses = hoy.getMonth() - nacimiento.getMonth();
+    let dias = hoy.getDate() - nacimiento.getDate();
+
+    if (dias < 0) {
+      meses--;
+      // Suma los días del mes anterior
+      const mesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+      dias += mesAnterior.getDate();
     }
-    return años;
+    if (meses < 0) {
+      años--;
+      meses += 12;
+    }
+
+    if (años > 0) {
+      return `${años} año${años > 1 ? 's' : ''} ${meses} mes${meses !== 1 ? 'es' : ''}`;
+    } else {
+      return `${meses} mes${meses !== 1 ? 'es' : ''} ${dias} día${dias !== 1 ? 's' : ''}`;
+    }
   }
 }

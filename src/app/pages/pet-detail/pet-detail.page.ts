@@ -189,14 +189,27 @@ export class PetDetailPage implements OnInit {
     if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);
     const hoy = new Date();
+
     let años = hoy.getFullYear() - nacimiento.getFullYear();
     let meses = hoy.getMonth() - nacimiento.getMonth();
+    let dias = hoy.getDate() - nacimiento.getDate();
 
+    if (dias < 0) {
+      meses--;
+      // Suma los días del mes anterior
+      const mesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+      dias += mesAnterior.getDate();
+    }
     if (meses < 0) {
       años--;
       meses += 12;
     }
-    return `${años} años ${meses} meses`;
+
+    if (años > 0) {
+      return `${años} año${años > 1 ? 's' : ''} ${meses} mes${meses !== 1 ? 'es' : ''}`;
+    } else {
+      return `${meses} mes${meses !== 1 ? 'es' : ''} ${dias} día${dias !== 1 ? 's' : ''}`;
+    }
   }
 
   longPressTimeout: any = null;

@@ -84,4 +84,8 @@ export class AddPetPage {
     });
     toast.present();
   }
+
+  cancelar() {
+    this.router.navigate(['/home']);
+  }
 }
