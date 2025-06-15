@@ -70,7 +70,7 @@ transition: all 0.3s ease; / Transición suave para efectos */
 
 .login-button {
   background-color: #a4c084;
-  color: #fff;
+  --color: #fff;
   border-radius: 10px;
   padding: 10px 20px;
   font-size: 16px;

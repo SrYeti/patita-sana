@@ -1,0 +1,37 @@
+@import url("https://fonts.cdnfonts.com/css/century-gothic-paneuropean");
+
+ion-content {
+  --background: #f8f8f0 !important; /* o el color que quieras */
+}
+
+.ion-card {
+  --background: #b0cca5;
+  --color: #333;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  --background: #a4c084;
+  --color: #fff;
+  font-weight: light;
+  text-align: center;
+  font-size: 24px;
+  font-family: "century-gothic-paneuropean", sans-serif;
+}
+
+.logout {
+  --background: #f8f8f0;
+  --color: #333;
+  font-size: 16px;
+  text-align: center;
+}
+
+.side-bar-header {
+  --background: #a4c084;
+  --color: #fff;
+  padding: 10px;
+  font-size: 20px;
+
+  font-family: "century-gothic-paneuropean", sans-serif;
+}

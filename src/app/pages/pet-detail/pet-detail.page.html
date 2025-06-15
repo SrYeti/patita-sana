@@ -1,71 +1,123 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Detalle de Mascota</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-header class="header">
+    <ion-toolbar class="header">
+      <ion-title>Detalle de Mascota</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-button expand="block" fill="clear" (click)="volverAHome()">
-    Volver
-  </ion-button>
+  <ion-content class="ion-padding">
+    <ion-button
+      expand="block"
+      fill="clear"
+      (click)="volverAHome()"
+      class="volver-button"
+    >
+      Volver ☘︎
+    </ion-button>
 
-  <ion-card *ngIf="mascota">
-    <img *ngIf="mascota.fotoUrl" [src]="mascota.fotoUrl" alt="Foto de la mascota" />
-    <ion-card-header>
-      <ion-card-title>{{ mascota.nombre | capitalize }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div>Edad: {{ calcularEdad(mascota.fechaNacimiento) }}</div>
-      <div>Sexo: {{ mascota.sexo }}</div>
-      <div>Peso: {{ mascota.peso }} kg</div>
-      <div>N° ficha: {{ mascota.fichaNumero }}</div>
-    </ion-card-content>
-  </ion-card>
+    <ion-card *ngIf="mascota" class="ion-card">
+      <img
+        *ngIf="mascota.fotoUrl"
+        [src]="mascota.fotoUrl"
+        alt="Foto de la mascota"
+        class="mascota-foto"
+      />
+      <ion-card-header>
+        <ion-card-title>{{ mascota.nombre | capitalize }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div>Edad: {{ calcularEdad(mascota.fechaNacimiento) }}</div>
+        <div>Sexo: {{ mascota.sexo }}</div>
+        <div>Peso: {{ mascota.peso }} kg</div>
+        <div>N° ficha: {{ mascota.fichaNumero }}</div>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-button expand="block" (click)="editarMascota()">Editar datos</ion-button>
-  <ion-button expand="block" color="danger" (click)="confirmarEliminarMascota()">
-  Eliminar mascota
-  </ion-button>
+    <ion-button
+      expand="block"
+      (click)="editarMascota()"
+      fill="clear"
+      class="editar-button"
+    >
+      Editar datos</ion-button
+    >
+    <ion-button
+      expand="block"
+      fill="clear"
+      class="eliminar-button"
+      (click)="confirmarEliminarMascota()"
+    >
+      Eliminar mascota
+    </ion-button>
 
-  <ion-text>
-    <h2>Archivos médicos</h2>
-  </ion-text>
+    <ion-text class="texto-archivos">
+      <h2>Archivos médicos</h2>
+    </ion-text>
 
-  <ion-list *ngIf="documentos.length > 0">
-    <ion-item *ngFor="let doc of documentos"
-      (mousedown)="startLongPress(doc.id, $event)"
-      (touchstart)="startLongPress(doc.id, $event)"
-      (mouseup)="cancelLongPress()"
-      (mouseleave)="cancelLongPress()"
-      (touchend)="cancelLongPress()">
-      <ion-checkbox
-        *ngIf="seleccionando"
-        slot="start"
-        [checked]="seleccionados.has(doc.id)"
-        (ionChange)="toggleSeleccion(doc.id)">
-      </ion-checkbox>
-      <ion-label (click)="seleccionando ? toggleSeleccion(doc.id) : abrirPDF(doc.url)">
-        <div>{{ doc.nombre }}</div>
-        <div>{{ doc.fecha_subida | date:'short' }}</div>
-      </ion-label>
-      <ion-button *ngIf="!seleccionando" fill="clear" (click)="abrirPDF(doc.url)">
-        Ver PDF
-      </ion-button>
-    </ion-item>
-  </ion-list>
-  <ion-text *ngIf="documentos.length === 0">
-    <p>No hay documentos subidos.</p>
-  </ion-text>
+    <ion-list *ngIf="documentos.length > 0">
+      <ion-item
+        *ngFor="let doc of documentos"
+        (mousedown)="startLongPress(doc.id, $event)"
+        (touchstart)="startLongPress(doc.id, $event)"
+        (mouseup)="cancelLongPress()"
+        (mouseleave)="cancelLongPress()"
+        (touchend)="cancelLongPress()"
+      >
+        <ion-checkbox
+          *ngIf="seleccionando"
+          slot="start"
+          [checked]="seleccionados.has(doc.id)"
+          (ionChange)="toggleSeleccion(doc.id)"
+        >
+        </ion-checkbox>
+        <ion-label
+          (click)="seleccionando ? toggleSeleccion(doc.id) : abrirPDF(doc.url)"
+        >
+          <div>{{ doc.nombre }}</div>
+          <div>{{ doc.fecha_subida | date:'short' }}</div>
+        </ion-label>
+        <ion-button
+          *ngIf="!seleccionando"
+          fill="clear"
+          (click)="abrirPDF(doc.url)"
+        >
+          Ver PDF
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-text *ngIf="documentos.length === 0" class="texto-archivos">
+      <p>No hay documentos subidos.</p>
+    </ion-text>
 
-  <ion-button expand="block" (click)="abrirSelectorPDF()">
-    Agregar documento PDF
-  </ion-button>
-  <input type="file" accept="application/pdf" hidden #pdfInput (change)="onPDFSelected($event)">
+    <ion-button
+      expand="block"
+      (click)="abrirSelectorPDF()"
+      class="agregar-pdf-button"
+    >
+      Agregar documento PDF
+    </ion-button>
+    <input
+      type="file"
+      accept="application/pdf"
+      hidden
+      #pdfInput
+      (change)="onPDFSelected($event)"
+    />
 
-  <ion-button *ngIf="seleccionando" color="danger" expand="block" (click)="eliminarSeleccionados()">
-    Eliminar seleccionados
-  </ion-button>
-  <ion-button *ngIf="seleccionando" expand="block" (click)="cancelarSeleccion()">
-    Cancelar
-  </ion-button>
+    <ion-button
+      *ngIf="seleccionando"
+      color="danger"
+      expand="block"
+      (click)="eliminarSeleccionados()"
+    >
+      Eliminar seleccionados
+    </ion-button>
+    <ion-button
+      *ngIf="seleccionando"
+      expand="block"
+      (click)="cancelarSeleccion()"
+    >
+      Cancelar
+    </ion-button>
+  </ion-content>
 </ion-content>
