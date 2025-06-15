@@ -1,14 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Patita Sana</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-header [translucent]="true">
+    <ion-toolbar class="ion-header">
+      <ion-title class="ion-header">Patita Sana</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="ion-padding" [fullscreen]="true">
-  <div style="text-align:center; margin-top: 40px;">
-    <h2>¡Oops!</h2>
-    <p>Página no encontrada.</p>
-    <ion-button expand="block" (click)="goHome()">Ir a inicio</ion-button>
-    <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
-  </div>
+  <ion-content class="ion-padding" [fullscreen]="true">
+    <div style="text-align: center; margin-top: 40px">
+      <h2 class="texto">¡Oops!</h2>
+      <p class="texto">Página no encontrada.</p>
+      <ion-button
+        expand="block"
+        (click)="goHome()"
+        class="input-button"
+        fill="clear"
+        >Ir a inicio</ion-button
+      >
+      <ion-button
+        expand="block"
+        class="input-button-2"
+        (click)="logout()"
+        fill="clear"
+        >Cerrar sesión</ion-button
+      >
+    </div>
+  </ion-content>
 </ion-content>

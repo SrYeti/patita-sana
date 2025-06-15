@@ -1,27 +1,64 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div>
+  <ion-content class="ion-page">
+    <ion-header>
+      <ion-toolbar class="ion-header">
+        <ion-title class="ion-header">Registro</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div class="foto-banner">
+      <img src="assets/perrio.jpg" alt="" />
+    </div>
 
-<ion-content class="ion-padding">
-  <form (ngSubmit)="onRegister()">
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Correo</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Confirma Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit">Registrarse</ion-button>
-  </form>
-</ion-content>
+    <ion-content class="ion-padding">
+      <form (ngSubmit)="onRegister()">
+        <ion-item class="input-item">
+          <ion-label position="floating" class="input-label">Nombre</ion-label>
+          <ion-input
+            type="text"
+            [(ngModel)]="nombre"
+            name="nombre"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label position="floating" class="input-label">Correo</ion-label>
+          <ion-input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label position="floating" class="input-label"
+            >Contraseña</ion-label
+          >
+          <ion-input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item class="input-item">
+          <ion-label position="floating" class="input-label"
+            >Confirma Contraseña</ion-label
+          >
+          <ion-input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-button
+          expand="block"
+          type="submit"
+          fill="clear"
+          class="registro-button"
+          >Registrarse</ion-button
+        >
+      </form>
+    </ion-content>
+  </ion-content>
+</div>

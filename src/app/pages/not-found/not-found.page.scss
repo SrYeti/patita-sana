@@ -1,0 +1,30 @@
+ion-content {
+  --background: #f8f8f0;
+}
+
+.texto {
+  color: #a4c084;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.ion-header {
+  --background: #a4c084 !important; /* o el color que quieras */
+}
+
+.input-button {
+  background-color: #a4c084;
+  --color: #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.input-button-2 {
+  background-color: #eace4f;
+  --color: #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 12px;
+}

@@ -42,5 +42,9 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'not-found',
     pathMatch: 'full',
+  },  {
+    path: 'symptom-form',
+    loadComponent: () => import('./pages/symptom-form/symptom-form.page').then( m => m.SymptomFormPage)
   }
+
 ];
