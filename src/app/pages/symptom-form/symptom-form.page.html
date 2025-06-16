@@ -1,13 +1,79 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>symptom-form</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">symptom-form</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Registro de Síntomas</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-content>
+    <form [formGroup]="symptomForm" (ngSubmit)="onSubmit()" class="ion-padding">
+      <!-- Fecha y Hora (automáticas pero editables) -->
+      <ion-item>
+        <ion-label position="stacked">Fecha y Hora</ion-label>
+        <ion-datetime
+          displayFormat="DD/MM/YYYY HH:mm"
+          formControlName="dateTime"
+          [value]="currentDateTime"
+        >
+        </ion-datetime>
+      </ion-item>
+
+      <!-- Descripción -->
+      <ion-item>
+        <ion-label position="stacked">Descripción de síntomas *</ion-label>
+        <ion-textarea
+          formControlName="description"
+          rows="4"
+          required
+          placeholder="Ej: Letargo, temblores, dificultad para respirar..."
+        >
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Síntomas Sí/No -->
+      <ion-list>
+        <ion-list-header>Síntomas</ion-list-header>
+
+        <ion-item>
+          <ion-label>¿Ha vomitado?</ion-label>
+          <ion-toggle formControlName="hasVomited"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>¿Ha comido en las últimas 5 horas?</ion-label>
+          <ion-toggle formControlName="hasEaten"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>¿Ha bebido agua?</ion-label>
+          <ion-toggle formControlName="hasDrunkWater"></ion-toggle>
+        </ion-item>
+      </ion-list>
+
+      <!-- Notas adicionales -->
+      <ion-item>
+        <ion-label position="stacked">Observaciones adicionales</ion-label>
+        <ion-textarea
+          formControlName="notes"
+          rows="2"
+          placeholder="Otra información relevante..."
+        >
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Botón -->
+      <ion-button
+        type="submit"
+        expand="block"
+        [disabled]="!symptomForm.valid"
+        class="ion-margin-top"
+      >
+        <ion-icon slot="start" name="paw"></ion-icon>
+        Guardar Registro
+      </ion-button>
+    </form>
+  </ion-content>
 </ion-content>
