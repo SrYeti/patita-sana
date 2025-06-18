@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SymptomService } from '../../services/symptom.service'; // Ajusta el path si es necesario
+import { SupabaseAuthService } from '../../services/supabase-auth.service'; // Ajusta el path si es necesario
+import { PetSymptom } from '../../models/pet-symptom.model';
+
 import {
   IonContent,
   IonHeader,
@@ -40,24 +44,36 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonButtons,
-    IonLabel,
-    IonBackButton,
-    IonToolbar,
     IonIcon,
-    IonListHeader,
     IonDatetime,
   ],
 })
 export class SymptomFormPage implements OnInit {
-  symptomForm: FormGroup = this.fb.group({}); // Inicializado aquí
+  symptomForm: FormGroup = this.fb.group({});
   currentDateTime = new Date().toISOString();
+  currentPetId: string = '';
+  currentUserId: string = '';
+
   constructor(
     private fb: FormBuilder,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private symptomService: SymptomService,
+    private authService: SupabaseAuthService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.initForm();
   }
+
+  async ngOnInit() {
+    // Obtener el id de la mascota desde la URL
+    this.currentPetId = this.route.snapshot.paramMap.get('id') ?? '';
+
+    // Obtener el id del usuario autenticado
+    const { data } = await this.authService.getCurrentUser();
+    this.currentUserId = data?.user?.id ?? '';
+  }
+
   initForm() {
     this.symptomForm = this.fb.group({
       dateTime: [this.currentDateTime, Validators.required],
@@ -71,10 +87,11 @@ export class SymptomFormPage implements OnInit {
 
   async onSubmit() {
     if (this.symptomForm.valid) {
-      const symptomData = {
-        mascota_id: this.currentPetId, // Debes obtener esto de tu página anterior
-        user_id: this.currentUserId, // Obtenido de tu servicio de autenticación
-        fecha_creacion: new Date().toISOString(),
+      const symptomData: PetSymptom = {
+        id: '', // Supabase lo genera
+        mascota_id: this.currentPetId,
+        user_id: this.currentUserId,
+        fecha_creacion: this.symptomForm.value.dateTime,
         descripcion: this.symptomForm.value.description,
         vomitos: this.symptomForm.value.hasVomited,
         ha_comido: this.symptomForm.value.hasEaten,
@@ -85,9 +102,9 @@ export class SymptomFormPage implements OnInit {
       try {
         await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
-        this.router.navigate(['/medical-file', this.currentPetId]);
+        this.router.navigate(['/pet-detail', this.currentPetId]);
       } catch (error) {
-        await this.presentToast('Error al guardar', 'danger');
+        await this.presentToast('Error al guardar');
       }
     }
   }
@@ -99,8 +116,5 @@ export class SymptomFormPage implements OnInit {
       color: 'success',
     });
     toast.present();
-  }
-  ngOnInit() {
-    // Puedes dejar esto vacío o añadir lógica de inicialización
   }
 }
