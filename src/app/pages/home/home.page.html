@@ -1,58 +1,91 @@
 <ion-content>
-  <div class="all-content">
-    <!-- Menú lateral -->
-    <ion-menu
-      side="start"
-      menuId="main-menu"
-      contentId="main-content"
-      fill="clear"
-      class="side-bar-header"
-    >
-      <ion-header class="header">
-        <ion-toolbar class="header">
-          <ion-title class="header">Patita Sana</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content class="header">
-        <ion-list class="logout">
-          <ion-item lines="none" class="logout">
-            <!--
-            <ion-avatar slot="start">
-              
-            </ion-avatar>-->
-            <ion-label fill="clear" class="ion-card">
-              <h2>{{ userName }}</h2>
-            </ion-label>
-          </ion-item>
-          <ion-item button (click)="logout()" class="logout">
-            <ion-label>Cerrar sesión</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-
-    <!-- Encabezado principal -->
-    <ion-header [translucent]="true" class="header" fill="clear">
+  <!-- Menú lateral -->
+  <ion-menu
+    side="start"
+    menuId="main-menu"
+    contentId="main-content"
+    fill="clear"
+    class="side-bar-header"
+  >
+    <ion-header class="header">
       <ion-toolbar class="header">
-        <ion-buttons slot="start">
-          <ion-menu-button menu="main-menu"></ion-menu-button>
-        </ion-buttons>
-        <ion-title class="header" fill="clear">Mis mascotas</ion-title>
+        <ion-title class="header">Patita Sana</ion-title>
       </ion-toolbar>
     </ion-header>
 
+    <ion-content class="header">
+      <ion-list class="logout">
+        <ion-item lines="none" class="logout">
+          <!--
+          <ion-avatar slot="start">
+            
+          </ion-avatar>-->
+          <ion-label fill="clear" class="ion-card">
+            <h2>{{ userName }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item button (click)="logout()" class="logout">
+          <ion-label>Cerrar sesión</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Encabezado principal -->
+  <ion-header [translucent]="true" class="header" fill="clear">
+    <ion-toolbar class="header">
+      <ion-buttons slot="start">
+        <ion-menu-button menu="main-menu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="header" fill="clear">Mis mascotas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Fondo: 4/5 blanco, 1/5 verde con olas menos profundas y fondo blanco -->
+  <div class="home-background">
+    <svg
+      viewBox="0 0 1440 1000"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+      style="
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      "
+    >
+      <rect x="0" y="0" width="1440" height="1000" fill="#fff" />
+      <path
+        d="M0,800
+        Q90,825 180,800
+        Q270,775 360,800
+        Q450,825 540,800
+        Q630,775 720,800
+        Q810,825 900,800
+        Q990,775 1080,800
+        Q1170,825 1260,800
+        Q1350,775 1440,800
+        L1440,1000 L0,1000 Z"
+        fill="#a4c084"
+      />
+    </svg>
+  </div>
+
+  <!-- Banner de imagen justo bajo la barra -->
+  <img src="assets/gatio.jpg" alt="" />
+
+  <div class="home-container">
     <!-- Contenido principal: listado de mascotas -->
     <ion-content id="main-content" [fullscreen]="true" class="ion-padding">
-      <img src="assets/gatio.jpg" alt="" />
-
       <!-- Grid de tarjetas de mascotas -->
-      <ion-grid>
+      <ion-grid class="main-content-grid">
         <ion-row>
           <ion-col size="6" *ngFor="let mascota of mascotas">
             <ion-card
               (click)="verDetalleMascota(mascota.id)"
-              style="cursor: pointer"
               class="ion-card"
               fill="clear"
             >
@@ -62,9 +95,9 @@
                 style="width: 100%; height: 120px; object-fit: cover"
               />
               <ion-card-header>
-                <ion-card-title
-                  >{{ mascota.nombre | capitalize }}</ion-card-title
-                >
+                <ion-card-title>
+                  {{ mascota.nombre | capitalize }}
+                </ion-card-title>
                 <ion-card-subtitle>
                   {{ calcularEdadHome(mascota.fechaNacimiento) }}
                 </ion-card-subtitle>
@@ -75,15 +108,8 @@
           <!-- Tarjeta para añadir nueva mascota -->
           <ion-col size="6">
             <ion-card
-              fill="clear"
-              class="ion-card"
+              class="add-pet"
               (click)="irAAgregarMascota()"
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 160px;
-                cursor: pointer;"
             >
               <div>Añadir Mascota</div>
             </ion-card>
