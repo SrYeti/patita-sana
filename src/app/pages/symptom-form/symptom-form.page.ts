@@ -51,6 +51,7 @@ import {
   ],
 })
 export class SymptomFormPage implements OnInit {
+  // Propiedades del formulario
   symptomForm: FormGroup = this.fb.group({});
   currentDateTime = new Date().toISOString();
   currentPetId: string = '';
@@ -67,12 +68,14 @@ export class SymptomFormPage implements OnInit {
     this.initForm();
   }
 
+  // Inicializa el formulario y obtiene los IDs necesarios
   async ngOnInit() {
     this.currentPetId = this.route.snapshot.paramMap.get('id') ?? '';
     const { data } = await this.authService.getCurrentUser();
     this.currentUserId = data?.user?.id ?? '';
   }
 
+  // Inicializa los controles del formulario
   initForm() {
     this.symptomForm = this.fb.group({
       dateTime: [this.currentDateTime, Validators.required],
@@ -84,6 +87,7 @@ export class SymptomFormPage implements OnInit {
     });
   }
 
+  // Envía el formulario para guardar el síntoma
   async onSubmit() {
     if (this.symptomForm.valid) {
       // NO enviar el campo id
@@ -109,6 +113,7 @@ export class SymptomFormPage implements OnInit {
     }
   }
 
+  // Muestra un mensaje toast
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -118,6 +123,7 @@ export class SymptomFormPage implements OnInit {
     toast.present();
   }
 
+  // Vuelve al detalle de la mascota
   volverAPetDetail() {
     this.router.navigate(['/pet-detail', this.currentPetId]);
   }

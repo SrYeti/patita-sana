@@ -51,30 +51,37 @@ import { PetSymptom } from '../../models/pet-symptom.model';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class SymptomListModalComponent {
+  // Entradas y salidas del componente
   @Input() sintomas: PetSymptom[] = [];
   @Input() mascotaId: string = '';
   @Output() eliminar = new EventEmitter<string[]>();
 
+  // Estado de selección de síntomas
   seleccionados: { [id: string]: boolean } = {};
 
+  // Devuelve los IDs seleccionados
   get idsSeleccionados(): string[] {
     return Object.keys(this.seleccionados).filter(id => this.seleccionados[id]);
   }
 
   constructor(private modalCtrl: ModalController) {}
 
+  // Cierra el modal
   cerrar() {
     this.modalCtrl.dismiss();
   }
 
+  // Solicita agregar un nuevo síntoma
   nuevoSintoma() {
     this.modalCtrl.dismiss('nuevo');
   }
 
+  // Refresca la vista al cambiar la selección
   onSeleccionChange() {
     // Solo refresca la vista
   }
 
+  // Elimina los síntomas seleccionados
   eliminarSeleccionados() {
     this.modalCtrl.dismiss({ eliminar: this.idsSeleccionados });
   }

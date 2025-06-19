@@ -16,6 +16,7 @@ import { CapitalizePipe } from '../../pipes/capitalize.pipe';
   imports: [IonicModule, CommonModule, FormsModule, CapitalizePipe]
 })
 export class HomePage implements OnInit {
+  // Propiedades de usuario y mascotas
   mascotas: Pet[] = [];
   userId: string | null = null;
   userName: string | null = null;
@@ -26,6 +27,7 @@ export class HomePage implements OnInit {
     private router: Router
   ) {}
 
+  // Inicializa la página y carga mascotas
   async ngOnInit() {
     const { data } = await this.supabaseAuth.getCurrentUser();
     if (data?.user) {
@@ -40,30 +42,36 @@ export class HomePage implements OnInit {
     }
   }
 
+  // Refresca la lista de mascotas al entrar
   async ionViewWillEnter() {
     if (this.userId) {
       await this.cargarMascotas();
     }
   }
 
+  // Carga las mascotas del usuario
   async cargarMascotas() {
     if (!this.userId) return;
     this.mascotas = await this.petService.getMascotas(this.userId);
   }
 
+  // Navega a la pantalla para agregar mascota
   irAAgregarMascota() {
     this.router.navigate(['/add-pet']);
   }
 
+  // Navega al detalle de la mascota
   verDetalleMascota(id: string) {
     this.router.navigate(['/pet-detail', id]);
   }
 
+  // Cierra sesión
   async logout() {
     await this.supabaseAuth.signOut();
     this.router.navigate(['/login']);
   }
 
+  // Calcula la edad de la mascota para mostrar en la home
   calcularEdadHome(fechaNacimiento: string): string {
     if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);

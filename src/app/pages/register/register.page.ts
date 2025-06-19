@@ -13,6 +13,7 @@ import { SupabaseAuthService } from '../../services/supabase-auth.service';
   imports: [IonicModule, FormsModule, CommonModule]
 })
 export class RegisterPage {
+  // Propiedades del formulario
   nombre = '';
   email = '';
   password = '';
@@ -24,6 +25,7 @@ export class RegisterPage {
     private toastCtrl: ToastController
   ) {}
 
+  // Registra un nuevo usuario
   async onRegister() {
     if (!this.nombre) {
       this.showToast('El nombre es obligatorio');
@@ -42,6 +44,7 @@ export class RegisterPage {
     }
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,

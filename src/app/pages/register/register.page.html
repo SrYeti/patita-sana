@@ -1,16 +1,24 @@
+<!-- Página de registro de usuario -->
 <div>
   <ion-content class="ion-page">
+
+    <!-- Encabezado de registro -->
     <ion-header>
       <ion-toolbar class="ion-header">
         <ion-title class="ion-header">Registro</ion-title>
       </ion-toolbar>
     </ion-header>
+
+    <!-- Banner superior -->
     <div class="foto-banner">
       <img src="assets/perrio.jpg" alt="" />
     </div>
 
+    <!-- Formulario de registro -->
     <ion-content class="ion-padding">
       <form (ngSubmit)="onRegister()">
+
+        <!-- Campo: Nombre -->
         <ion-item class="input-item">
           <ion-label position="floating" class="input-label">Nombre</ion-label>
           <ion-input
@@ -20,6 +28,8 @@
             required
           ></ion-input>
         </ion-item>
+
+        <!-- Campo: Correo -->
         <ion-item class="input-item">
           <ion-label position="floating" class="input-label">Correo</ion-label>
           <ion-input
@@ -29,6 +39,8 @@
             required
           ></ion-input>
         </ion-item>
+
+        <!-- Campo: Contraseña -->
         <ion-item class="input-item">
           <ion-label position="floating" class="input-label"
             >Contraseña</ion-label
@@ -40,6 +52,8 @@
             required
           ></ion-input>
         </ion-item>
+
+        <!-- Campo: Confirmar contraseña -->
         <ion-item class="input-item">
           <ion-label position="floating" class="input-label"
             >Confirma Contraseña</ion-label
@@ -51,6 +65,8 @@
             required
           ></ion-input>
         </ion-item>
+
+        <!-- Botón de registro -->
         <ion-button
           expand="block"
           type="submit"

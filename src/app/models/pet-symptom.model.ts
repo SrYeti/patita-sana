@@ -1,4 +1,3 @@
-// src/app/models/pet-symptom.model.ts
 export interface PetSymptom {
   id: string;
   mascota_id: string;

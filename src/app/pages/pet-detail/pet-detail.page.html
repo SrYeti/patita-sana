@@ -1,3 +1,4 @@
+<!-- Encabezado de la página de detalle de mascota -->
 <ion-header class="header">
   <ion-toolbar class="header">
     <ion-title>Detalle de Mascota</ion-title>
@@ -5,6 +6,8 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
+  <!-- Botón para volver al inicio -->
   <ion-button
     expand="block"
     fill="clear"
@@ -14,6 +17,7 @@
     Volver ☘︎
   </ion-button>
 
+  <!-- Tarjeta con información de la mascota -->
   <ion-card *ngIf="mascota" class="ion-card">
     <img
       *ngIf="mascota.fotoUrl"
@@ -32,6 +36,7 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Botón para editar datos de la mascota -->
   <ion-button
     expand="block"
     (click)="editarMascota()"
@@ -41,7 +46,7 @@
     Editar datos
   </ion-button>
   
-  <!-- Botones para abrir modales -->
+  <!-- Acciones: Archivos médicos y Síntomas -->
   <div class="pet-detail-actions ion-margin-bottom">
     <ion-button expand="block" (click)="abrirModalArchivos()">
       Archivos médicos
@@ -51,7 +56,7 @@
     </ion-button>
   </div>
 
-  <!-- Recientes -->
+  <!-- Sección de elementos recientes -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Recientes</ion-card-title>
@@ -80,6 +85,7 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Botón para eliminar la mascota -->
   <ion-button
     expand="block"
     fill="clear"
@@ -89,7 +95,7 @@
     Eliminar mascota
   </ion-button>
 
-  <!-- Input para PDF (fuera del modal para evitar problemas de referencia) -->
+  <!-- Input oculto para seleccionar PDF -->
   <input
     #pdfInput
     type="file"
@@ -97,4 +103,5 @@
     style="display: none"
     (change)="onPDFSelected($event)"
   />
+
 </ion-content>

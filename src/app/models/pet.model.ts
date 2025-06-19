@@ -4,7 +4,7 @@ export interface Pet {
   sexo: string;
   peso: number;
   fichaNumero: string;
-  user_id: string; // <-- agrega esta línea
+  user_id: string;
   fotoUrl?: string;
   fechaNacimiento: string;
 }

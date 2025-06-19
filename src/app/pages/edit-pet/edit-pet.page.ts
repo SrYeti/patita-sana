@@ -15,6 +15,7 @@ import { supabase } from '../../../environments/supabase-client';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class EditPetPage implements OnInit {
+  // Propiedades del formulario
   mascota: Pet | null = null;
   nombre = '';
   fichaNumero = '';
@@ -30,6 +31,7 @@ export class EditPetPage implements OnInit {
     private toastCtrl: ToastController
   ) {}
 
+  // Inicializa el formulario con los datos de la mascota
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -44,6 +46,7 @@ export class EditPetPage implements OnInit {
     }
   }
 
+  // Guarda los cambios realizados en la mascota
   async guardarCambios() {
     if (!this.mascota) return;
     try {
@@ -63,6 +66,7 @@ export class EditPetPage implements OnInit {
     }
   }
 
+  // Maneja la selección de una nueva foto
   async onFotoSelected(event: any) {
     const file: File = event.target.files[0];
     if (!file || !this.mascota) return;
@@ -77,7 +81,7 @@ export class EditPetPage implements OnInit {
       return;
     }
 
-    // Obtén la URL pública de la foto
+    // Obtiene la URL pública de la foto
     const { data } = supabase.storage
       .from('fotos-mascotas')
       .getPublicUrl(filePath);
@@ -88,6 +92,7 @@ export class EditPetPage implements OnInit {
     }
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -97,6 +102,7 @@ export class EditPetPage implements OnInit {
     toast.present();
   }
 
+  // Cancela la edición y vuelve al detalle de la mascota
   cancelar() {
     if (this.mascota) {
       this.router.navigate(['/pet-detail', this.mascota.id]);

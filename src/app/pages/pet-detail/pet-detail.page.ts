@@ -26,11 +26,11 @@ function limpiarNombre(nombre: string): string {
   imports: [IonicModule, CommonModule, FormsModule, CapitalizePipe,]
 })
 export class PetDetailPage implements OnInit {
+  // Propiedades de la mascota y sus datos relacionados
   mascota: Pet | null = null;
   documentos: any[] = [];
   sintomas: PetSymptom[] = [];
   recientes: Array<any> = [];
-
 
   @ViewChild('pdfInput', { static: false }) pdfInput!: ElementRef<HTMLInputElement>;
 
@@ -43,6 +43,7 @@ export class PetDetailPage implements OnInit {
     private modalCtrl: ModalController
   ) {}
 
+  // Inicializa la página cargando los datos
   async ngOnInit() {
     await this.cargarMascota();
     await this.cargarDocumentos();
@@ -57,6 +58,7 @@ export class PetDetailPage implements OnInit {
     this.cargarRecientes();
   }
 
+  // Carga los datos de la mascota
   private async cargarMascota() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -64,6 +66,7 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Carga los documentos médicos de la mascota
   private async cargarDocumentos() {
     this.documentos = [];
     if (!this.mascota) return;
@@ -77,6 +80,7 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Carga los síntomas de la mascota
   private async cargarSintomas() {
     this.sintomas = [];
     if (!this.mascota) return;
@@ -84,6 +88,7 @@ export class PetDetailPage implements OnInit {
     this.sintomas = (sintomas ?? []).filter(s => !!s);
   }
 
+  // Genera la lista de elementos recientes (documentos y síntomas)
   cargarRecientes() {
     const docs = this.documentos.map(doc => ({
       tipo: 'documento',
@@ -103,7 +108,7 @@ export class PetDetailPage implements OnInit {
       .slice(0, 3);
   }
 
-  // MODAL DE SÍNTOMAS CON MODALCONTROLLER
+  // Abre el modal de síntomas
   async abrirModalSintomas() {
     const modal = await this.modalCtrl.create({
       component: SymptomListModalComponent,
@@ -122,6 +127,7 @@ export class PetDetailPage implements OnInit {
     await modal.present();
   }
 
+  // Elimina los síntomas seleccionados
   async eliminarSintomasSeleccionados(ids: string[]) {
     for (const id of ids) {
       await this.symptomService.deleteSymptom(id);
@@ -131,6 +137,7 @@ export class PetDetailPage implements OnInit {
     this.cargarRecientes();
   }
 
+  // Abre el modal de archivos médicos
   async abrirModalArchivos() {
     const modal = await this.modalCtrl.create({
       component: MedicalFilesModalComponent,
@@ -150,17 +157,20 @@ export class PetDetailPage implements OnInit {
     await modal.present();
   }
 
+  // Navega al formulario de síntoma
   async abrirFormularioSintoma() {
     if (this.mascota) {
       this.router.navigate(['/symptom-form', this.mascota!.id]);
     }
   }
 
+  // Abre el selector de archivos PDF
   abrirSelectorPDF() {
     this.pdfInput.nativeElement.value = '';
     this.pdfInput.nativeElement.click();
   }
 
+  // Maneja la selección de un archivo PDF
   async onPDFSelected(event: any) {
     const file: File = event.target.files[0];
     if (!file || !this.mascota) return;
@@ -216,6 +226,7 @@ export class PetDetailPage implements OnInit {
     window.open(data.signedUrl, '_blank');
   }
 
+  // Elimina los archivos seleccionados
   async eliminarSeleccionados(ids: string[]) {
     const docsAEliminar = this.documentos.filter(doc => ids.includes(doc.id));
     for (const doc of docsAEliminar) {
@@ -230,6 +241,7 @@ export class PetDetailPage implements OnInit {
     this.cargarRecientes();
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -239,16 +251,19 @@ export class PetDetailPage implements OnInit {
     toast.present();
   }
 
+  // Navega a la pantalla de edición de mascota
   editarMascota() {
     if (this.mascota) {
       this.router.navigate(['/edit-pet', this.mascota.id]);
     }
   }
 
+  // Vuelve a la pantalla principal
   volverAHome() {
     this.router.navigate(['/home']);
   }
 
+  // Calcula la edad de la mascota
   calcularEdad(fechaNacimiento: string): string {
     if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);
@@ -275,6 +290,7 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Confirma la eliminación de la mascota
   async confirmarEliminarMascota() {
     const confirm = window.confirm('¿Estás seguro de que deseas eliminar esta mascota? Se eliminarán todos sus archivos médicos.');
     if (confirm) {
@@ -282,6 +298,7 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Elimina la mascota y sus archivos asociados
   async eliminarMascota() {
     if (!this.mascota) return;
 

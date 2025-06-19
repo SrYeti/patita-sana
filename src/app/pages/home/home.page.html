@@ -1,5 +1,6 @@
 <ion-content>
   <div class="all-content">
+    <!-- Menú lateral -->
     <ion-menu
       side="start"
       menuId="main-menu"
@@ -12,6 +13,7 @@
           <ion-title class="header">Patita Sana</ion-title>
         </ion-toolbar>
       </ion-header>
+
       <ion-content class="header">
         <ion-list class="logout">
           <ion-item lines="none" class="logout">
@@ -30,6 +32,7 @@
       </ion-content>
     </ion-menu>
 
+    <!-- Encabezado principal -->
     <ion-header [translucent]="true" class="header" fill="clear">
       <ion-toolbar class="header">
         <ion-buttons slot="start">
@@ -39,9 +42,11 @@
       </ion-toolbar>
     </ion-header>
 
+    <!-- Contenido principal: listado de mascotas -->
     <ion-content id="main-content" [fullscreen]="true" class="ion-padding">
       <img src="assets/gatio.jpg" alt="" />
 
+      <!-- Grid de tarjetas de mascotas -->
       <ion-grid>
         <ion-row>
           <ion-col size="6" *ngFor="let mascota of mascotas">
@@ -66,6 +71,8 @@
               </ion-card-header>
             </ion-card>
           </ion-col>
+
+          <!-- Tarjeta para añadir nueva mascota -->
           <ion-col size="6">
             <ion-card
               fill="clear"

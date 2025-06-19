@@ -1,3 +1,4 @@
+<!-- Encabezado de la página de registro de síntomas -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -7,9 +8,11 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- Formulario de registro de síntomas -->
 <ion-content>
   <form [formGroup]="symptomForm" (ngSubmit)="onSubmit()" class="ion-padding">
-    <!-- Fecha y Hora (automáticas pero editables) -->
+
+    <!-- Campo: Fecha y Hora -->
     <ion-item>
       <ion-label position="stacked">Fecha y Hora</ion-label>
       <ion-datetime
@@ -19,7 +22,7 @@
       ></ion-datetime>
     </ion-item>
 
-    <!-- Descripción -->
+    <!-- Campo: Descripción -->
     <ion-item>
       <ion-label position="stacked">Descripción de síntomas *</ion-label>
       <ion-textarea
@@ -30,7 +33,7 @@
       ></ion-textarea>
     </ion-item>
 
-    <!-- Síntomas Sí/No -->
+    <!-- Sección: Síntomas Sí/No -->
     <ion-list>
       <ion-list-header>Síntomas</ion-list-header>
 
@@ -50,7 +53,7 @@
       </ion-item>
     </ion-list>
 
-    <!-- Notas adicionales -->
+    <!-- Campo: Notas adicionales -->
     <ion-item>
       <ion-label position="stacked">Observaciones adicionales</ion-label>
       <ion-textarea
@@ -60,7 +63,7 @@
       ></ion-textarea>
     </ion-item>
 
-    <!-- Botón -->
+    <!-- Botón: Guardar Registro -->
     <ion-button
       type="submit"
       expand="block"
@@ -70,8 +73,10 @@
       Guardar Registro
     </ion-button>
 
+    <!-- Botón: Cancelar -->
     <ion-button expand="block" color="medium" type="button" (click)="volverAPetDetail()">
       Cancelar
     </ion-button>
+
   </form>
 </ion-content>

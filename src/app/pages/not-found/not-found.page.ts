@@ -18,10 +18,12 @@ export class NotFoundPage {
     private supabaseAuth: SupabaseAuthService
   ) {}
 
+  // Navega a la pantalla principal
   goHome() {
     this.router.navigate(['/home']);
   }
 
+  // Cierra sesión y navega al login
   async logout() {
     await this.supabaseAuth.signOut();
     this.router.navigate(['/login']);

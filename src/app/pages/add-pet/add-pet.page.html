@@ -1,19 +1,27 @@
+<!-- Encabezado de la página -->
 <ion-header>
   <ion-toolbar>
     <ion-title>Añadir Mascota</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Formulario para añadir mascota -->
 <ion-content class="ion-padding">
   <form (ngSubmit)="onAddPet()">
+
+    <!-- Campo: Nombre -->
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
       <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
     </ion-item>
+
+    <!-- Campo: Número de Ficha -->
     <ion-item>
       <ion-label position="floating">Número de Ficha</ion-label>
       <ion-input type="text" [(ngModel)]="fichaNumero" name="fichaNumero"></ion-input>
     </ion-item>
+
+    <!-- Campo: Fecha de nacimiento -->
     <ion-item>
       <ion-label position="stacked">Fecha de nacimiento</ion-label>
       <ion-datetime
@@ -23,6 +31,8 @@
         required>
       </ion-datetime>
     </ion-item>
+
+    <!-- Campo: Sexo -->
     <ion-item>
       <ion-label position="floating">Sexo</ion-label>
       <ion-select [(ngModel)]="sexo" name="sexo" required>
@@ -30,15 +40,22 @@
         <ion-select-option value="Hembra">Hembra</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <!-- Campo: Peso -->
     <ion-item>
       <ion-label position="floating">Peso (kg)</ion-label>
       <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
     </ion-item>
+
+    <!-- Campo: Foto de la mascota -->
     <ion-item>
       <ion-label>Foto de la mascota</ion-label>
       <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
     </ion-item>
+
+    <!-- Botones de acción -->
     <ion-button expand="block" type="submit">Guardar Mascota</ion-button>
     <ion-button expand="block" color="medium" type="button" (click)="cancelar()">Cancelar</ion-button>
+
   </form>
 </ion-content>

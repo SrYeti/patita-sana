@@ -12,6 +12,7 @@ import { SupabaseAuthService } from '../../services/supabase-auth.service';
   imports: [IonicModule, FormsModule]
 })
 export class LoginPage {
+  // Propiedades del formulario
   email = '';
   password = '';
 
@@ -21,6 +22,7 @@ export class LoginPage {
     private toastCtrl: ToastController
   ) {}
 
+  // Inicia sesión del usuario
   async onLogin() {
     try {
       await this.supabaseAuth.signIn(this.email, this.password);
@@ -30,6 +32,7 @@ export class LoginPage {
     }
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -39,10 +42,12 @@ export class LoginPage {
     toast.present();
   }
 
+  // Navega a la pantalla de registro
   goToRegister() {
-  this.router.navigate(['/register']);
+    this.router.navigate(['/register']);
   }
 
+  // Envía correo para restablecer contraseña
   async resetPassword() {
     if (!this.email) {
       this.showToast('Por favor ingresa tu correo para recuperar la contraseña');

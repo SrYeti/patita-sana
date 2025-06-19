@@ -34,6 +34,7 @@ export class SupabaseAuthService {
     return supabase.auth.getUser();
   }
 
+  // Envía correo para restablecer contraseña
   async resetPassword(email: string) {
     return await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + '/reset-password'

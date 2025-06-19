@@ -14,9 +14,10 @@ import { supabase } from '../../../environments/supabase-client';
   imports: [IonicModule, FormsModule]
 })
 export class AddPetPage {
+  // Propiedades del formulario
   nombre = '';
   fichaNumero = '';
-  fechaNacimiento: string = ''; // Cambiado aquí
+  fechaNacimiento: string = '';
   sexo = '';
   peso: number | null = null;
   fotoFile: File | null = null;
@@ -28,6 +29,7 @@ export class AddPetPage {
     private toastCtrl: ToastController
   ) {}
 
+  // Maneja la selección de la foto
   onFotoSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -35,6 +37,7 @@ export class AddPetPage {
     }
   }
 
+  // Agrega una nueva mascota
   async onAddPet() {
     try {
       // Obtener el usuario actual
@@ -47,13 +50,13 @@ export class AddPetPage {
 
       let fotoUrl: string | null = null;
       if (this.fotoFile) {
-        // Subir la foto a Supabase Storage
+        // Sube la foto al servidor
         const filePath = `mascotas/${userId}/${Date.now()}_${this.fotoFile.name}`;
         const { error: uploadError } = await supabase.storage
           .from('fotos-mascotas')
           .upload(filePath, this.fotoFile);
         if (uploadError) throw uploadError;
-        // Obtener la URL pública
+        // Obtiene la URL pública
         const { data: publicUrlData } = supabase.storage
           .from('fotos-mascotas')
           .getPublicUrl(filePath);
@@ -63,7 +66,7 @@ export class AddPetPage {
       await this.petService.addPet({
         nombre: this.nombre,
         fichaNumero: this.fichaNumero,
-        fechaNacimiento: this.fechaNacimiento, // Cambiado aquí
+        fechaNacimiento: this.fechaNacimiento,
         sexo: this.sexo,
         peso: this.peso ?? 0,
         fotoUrl: fotoUrl ?? undefined,
@@ -76,6 +79,7 @@ export class AddPetPage {
     }
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -85,6 +89,7 @@ export class AddPetPage {
     toast.present();
   }
 
+  // Cancela y vuelve a la pantalla principal
   cancelar() {
     this.router.navigate(['/home']);
   }
