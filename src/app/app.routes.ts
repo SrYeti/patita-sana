@@ -39,12 +39,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/reset-password/reset-password.page').then( m => m.ResetPasswordPage)
   },
   {
+    path: 'symptom-form/:id',
+    loadComponent: () => import('./pages/symptom-form/symptom-form.page').then( m => m.SymptomFormPage)
+  },
+  {
     path: '**',
     redirectTo: 'not-found',
     pathMatch: 'full',
-  },  {
-    path: 'symptom-form',
-    loadComponent: () => import('./pages/symptom-form/symptom-form.page').then( m => m.SymptomFormPage)
-  }
-
+  },
+  
 ];

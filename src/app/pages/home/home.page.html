@@ -1,5 +1,6 @@
 <ion-content>
   <div class="all-content">
+    <!-- Menú lateral -->
     <ion-menu
       side="start"
       menuId="main-menu"
@@ -12,28 +13,26 @@
           <ion-title class="header">Patita Sana</ion-title>
         </ion-toolbar>
       </ion-header>
+
       <ion-content class="header">
         <ion-list class="logout">
           <ion-item lines="none" class="logout">
+            <!--
             <ion-avatar slot="start">
-              <ion-icon
-                name="person-circle"
-                style="font-size: 2.5em"
-              ></ion-icon>
-            </ion-avatar>
+              
+            </ion-avatar>-->
             <ion-label fill="clear" class="ion-card">
               <h2 class="username">{{ userName }}</h2>
             </ion-label>
           </ion-item>
           <ion-item button (click)="logout()" class="logout">
-            <ion-icon name="log-out-outline" slot="start"></ion-icon>
             <ion-label>Cerrar sesión</ion-label>
           </ion-item>
-          <!-- Aquí puedes agregar más opciones, como eliminar mascota, modo oscuro, etc. -->
         </ion-list>
       </ion-content>
     </ion-menu>
 
+    <!-- Encabezado principal -->
     <ion-header [translucent]="true" class="header" fill="clear">
       <ion-toolbar class="header">
         <ion-buttons slot="start">
@@ -43,9 +42,11 @@
       </ion-toolbar>
     </ion-header>
 
+    <!-- Contenido principal: listado de mascotas -->
     <ion-content id="main-content" [fullscreen]="true" class="ion-padding">
       <img src="assets/gatio.jpg" alt="" />
 
+      <!-- Grid de tarjetas de mascotas -->
       <ion-grid>
         <ion-row>
           <ion-col size="6" *ngFor="let mascota of mascotas">
@@ -70,6 +71,8 @@
               </ion-card-header>
             </ion-card>
           </ion-col>
+
+          <!-- Tarjeta para añadir nueva mascota -->
           <ion-col size="6">
             <ion-card
               fill="clear"
@@ -80,10 +83,8 @@
                 align-items: center;
                 justify-content: center;
                 height: 160px;
-                cursor: pointer;
-              "
+                cursor: pointer;"
             >
-              <ion-icon name="add" size="large"></ion-icon>
               <div>Añadir Mascota</div>
             </ion-card>
           </ion-col>

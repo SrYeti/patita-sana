@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SymptomService } from '../../services/symptom.service';
+import { SupabaseAuthService } from '../../services/supabase-auth.service';
+
 import {
   IonContent,
   IonHeader,
@@ -18,6 +26,8 @@ import {
   IonIcon,
   IonListHeader,
   IonDatetime,
+  IonTextarea,
+  IonToggle,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -26,6 +36,9 @@ import {
   styleUrls: ['./symptom-form.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonListHeader,
     IonButton,
     IonList,
@@ -37,27 +50,37 @@ import {
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonButtons,
-    IonLabel,
-    IonBackButton,
-    IonToolbar,
-    IonIcon,
-    IonListHeader,
     IonDatetime,
+    IonTextarea,
+    IonToggle,
   ],
 })
 export class SymptomFormPage implements OnInit {
-  symptomForm: FormGroup = this.fb.group({}); // Inicializado aquí
+  // Propiedades del formulario
+  symptomForm: FormGroup = this.fb.group({});
   currentDateTime = new Date().toISOString();
+  currentPetId: string = '';
+  currentUserId: string = '';
+
   constructor(
     private fb: FormBuilder,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private symptomService: SymptomService,
+    private authService: SupabaseAuthService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.initForm();
   }
+
+  // Inicializa el formulario y obtiene los IDs necesarios
+  async ngOnInit() {
+    this.currentPetId = this.route.snapshot.paramMap.get('id') ?? '';
+    const { data } = await this.authService.getCurrentUser();
+    this.currentUserId = data?.user?.id ?? '';
+  }
+
+  // Inicializa los controles del formulario
   initForm() {
     this.symptomForm = this.fb.group({
       dateTime: [this.currentDateTime, Validators.required],
@@ -69,12 +92,14 @@ export class SymptomFormPage implements OnInit {
     });
   }
 
+  // Envía el formulario para guardar el síntoma
   async onSubmit() {
     if (this.symptomForm.valid) {
+      // NO enviar el campo id
       const symptomData = {
-        //mascota_id: this.currentPetId, // Debes obtener esto de tu página anterior
-        //user_id: this.currentUserId, // Obtenido de tu servicio de autenticación
-        fecha_creacion: new Date().toISOString(),
+        mascota_id: this.currentPetId,
+        user_id: this.currentUserId,
+        fecha_creacion: this.symptomForm.value.dateTime,
         descripcion: this.symptomForm.value.description,
         vomitos: this.symptomForm.value.hasVomited,
         ha_comido: this.symptomForm.value.hasEaten,
@@ -85,13 +110,16 @@ export class SymptomFormPage implements OnInit {
       try {
         //await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
-        //this.router.navigate(['/medical-file', this.currentPetId]);
-      } catch (error) {
-        //await this.presentToast('Error al guardar', 'danger');
+
+        this.router.navigate(['/pet-detail', this.currentPetId]);
+      } catch (error: any) {
+        console.error('Error al guardar síntoma:', error);
+        await this.presentToast('Error al guardar: ' + (error?.message || ''));
       }
     }
   }
 
+  // Muestra un mensaje toast
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -100,7 +128,9 @@ export class SymptomFormPage implements OnInit {
     });
     toast.present();
   }
-  ngOnInit() {
-    // Puedes dejar esto vacío o añadir lógica de inicialización
+
+  // Vuelve al detalle de la mascota
+  volverAPetDetail() {
+    this.router.navigate(['/pet-detail', this.currentPetId]);
   }
 }

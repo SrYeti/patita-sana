@@ -12,6 +12,7 @@ import { supabase } from '../../../environments/supabase-client';
   imports: [IonicModule, FormsModule]
 })
 export class ResetPasswordPage {
+  // Propiedad para la nueva contraseña
   newPassword = '';
 
   constructor(
@@ -19,6 +20,7 @@ export class ResetPasswordPage {
     private toastCtrl: ToastController
   ) {}
 
+  // Cambia la contraseña del usuario
   async onResetPassword() {
     try {
       const { error } = await supabase.auth.updateUser({ password: this.newPassword });
@@ -30,6 +32,7 @@ export class ResetPasswordPage {
     }
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,

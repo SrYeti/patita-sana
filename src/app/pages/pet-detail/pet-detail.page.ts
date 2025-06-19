@@ -1,18 +1,21 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { IonicModule, ToastController, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../models/pet.model';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { supabase } from '../../../environments/supabase-client';
+import { SymptomService } from '../../services/symptom.service';
+import { PetSymptom } from '../../models/pet-symptom.model';
+import { SymptomListModalComponent } from '../symptom-list-modal/symptom-list-modal.component';
+import { MedicalFilesModalComponent } from '../medical-files-modal/medical-files-modal.component';
 
-// --- Función para limpiar el nombre del archivo ---
 function limpiarNombre(nombre: string): string {
   return nombre
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quita tildes
-    .replace(/[^a-zA-Z0-9_-]/g, '_'); // solo letras, números, guion y guion bajo
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_-]/g, '_');
 }
 
 @Component({
@@ -20,34 +23,42 @@ function limpiarNombre(nombre: string): string {
   templateUrl: './pet-detail.page.html',
   styleUrls: ['./pet-detail.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, CapitalizePipe]
+  imports: [IonicModule, CommonModule, FormsModule, CapitalizePipe,]
 })
 export class PetDetailPage implements OnInit {
+  // Propiedades de la mascota y sus datos relacionados
   mascota: Pet | null = null;
   documentos: any[] = [];
-
-  seleccionando = false;
-  seleccionados = new Set<string>();
+  sintomas: PetSymptom[] = [];
+  recientes: Array<any> = [];
 
   @ViewChild('pdfInput', { static: false }) pdfInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private route: ActivatedRoute,
     private petService: PetService,
+    private symptomService: SymptomService,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private modalCtrl: ModalController
   ) {}
 
+  // Inicializa la página cargando los datos
   async ngOnInit() {
     await this.cargarMascota();
     await this.cargarDocumentos();
+    await this.cargarSintomas();
+    this.cargarRecientes();
   }
 
   async ionViewWillEnter() {
     await this.cargarMascota();
     await this.cargarDocumentos();
+    await this.cargarSintomas();
+    this.cargarRecientes();
   }
 
+  // Carga los datos de la mascota
   private async cargarMascota() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -55,7 +66,9 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Carga los documentos médicos de la mascota
   private async cargarDocumentos() {
+    this.documentos = [];
     if (!this.mascota) return;
     const { data, error } = await supabase
       .from('documentos')
@@ -63,20 +76,105 @@ export class PetDetailPage implements OnInit {
       .eq('mascota_id', this.mascota.id)
       .order('fecha_subida', { ascending: false });
     if (!error && data) {
-      this.documentos = data;
+      this.documentos = (data ?? []).filter(doc => !!doc);
     }
   }
 
+  // Carga los síntomas de la mascota
+  private async cargarSintomas() {
+    this.sintomas = [];
+    if (!this.mascota) return;
+    const sintomas = await this.symptomService.getSymptomsByPet(this.mascota.id);
+    this.sintomas = (sintomas ?? []).filter(s => !!s);
+  }
+
+  // Genera la lista de elementos recientes (documentos y síntomas)
+  cargarRecientes() {
+    const docs = this.documentos.map(doc => ({
+      tipo: 'documento',
+      nombre: doc.nombre,
+      fecha: new Date(doc.fecha_subida),
+      file_path: doc.file_path // Usar file_path
+    }));
+
+    const sintomas = this.sintomas.map(sintoma => ({
+      tipo: 'sintoma',
+      descripcion: sintoma.descripcion,
+      fecha: new Date(sintoma.fecha_creacion)
+    }));
+
+    this.recientes = [...docs, ...sintomas]
+      .sort((a, b) => b.fecha.getTime() - a.fecha.getTime())
+      .slice(0, 3);
+  }
+
+  // Abre el modal de síntomas
+  async abrirModalSintomas() {
+    const modal = await this.modalCtrl.create({
+      component: SymptomListModalComponent,
+      componentProps: {
+        sintomas: this.sintomas,
+        mascotaId: this.mascota?.id ?? ''
+      }
+    });
+    modal.onDidDismiss().then(async result => {
+      if (result.data === 'nuevo' && this.mascota) {
+        this.router.navigate(['/symptom-form', this.mascota.id]);
+      } else if (result.data?.eliminar && Array.isArray(result.data.eliminar)) {
+        await this.eliminarSintomasSeleccionados(result.data.eliminar);
+      }
+    });
+    await modal.present();
+  }
+
+  // Elimina los síntomas seleccionados
+  async eliminarSintomasSeleccionados(ids: string[]) {
+    for (const id of ids) {
+      await this.symptomService.deleteSymptom(id);
+    }
+    this.showToast('Síntomas eliminados');
+    await this.cargarSintomas();
+    this.cargarRecientes();
+  }
+
+  // Abre el modal de archivos médicos
+  async abrirModalArchivos() {
+    const modal = await this.modalCtrl.create({
+      component: MedicalFilesModalComponent,
+      componentProps: {
+        documentos: this.documentos
+      }
+    });
+    modal.onDidDismiss().then(async result => {
+      if (result.data === 'subir') {
+        this.abrirSelectorPDF();
+      } else if (result.data?.verPDF) {
+        await this.abrirPDF(result.data.verPDF);
+      } else if (result.data?.eliminar && Array.isArray(result.data.eliminar)) {
+        await this.eliminarSeleccionados(result.data.eliminar);
+      }
+    });
+    await modal.present();
+  }
+
+  // Navega al formulario de síntoma
+  async abrirFormularioSintoma() {
+    if (this.mascota) {
+      this.router.navigate(['/symptom-form', this.mascota!.id]);
+    }
+  }
+
+  // Abre el selector de archivos PDF
   abrirSelectorPDF() {
     this.pdfInput.nativeElement.value = '';
     this.pdfInput.nativeElement.click();
   }
 
+  // Maneja la selección de un archivo PDF
   async onPDFSelected(event: any) {
     const file: File = event.target.files[0];
     if (!file || !this.mascota) return;
 
-    // 1. Pedir nombre al usuario
     let nombreUsuario = prompt('Escribe un nombre para el archivo (sin tildes ni espacios):', file.name.replace('.pdf', ''));
     if (!nombreUsuario) return;
     nombreUsuario = limpiarNombre(nombreUsuario);
@@ -85,7 +183,6 @@ export class PetDetailPage implements OnInit {
     const mascotaId = this.mascota.id;
     const filePath = `mascota_${mascotaId}/${Date.now()}_${nombreUsuario}.pdf`;
 
-    // 2. Subir el PDF a Supabase Storage
     const { error: uploadError } = await supabase.storage
       .from('documentos-mascotas')
       .upload(filePath, file);
@@ -95,26 +192,14 @@ export class PetDetailPage implements OnInit {
       return;
     }
 
-    // 3. Obtener la signed URL (válida por 1 hora)
-    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
-      .from('documentos-mascotas')
-      .createSignedUrl(filePath, 60 * 60);
-
-    if (signedUrlError || !signedUrlData) {
-      this.showToast('Error al obtener la URL del PDF');
-      return;
-    }
-
-    const url = signedUrlData.signedUrl;
-
-    // 4. Guardar el registro en la tabla documentos
+    // NO guardes el signed URL, solo el file_path
     const { error: insertError } = await supabase
       .from('documentos')
       .insert([{
         mascota_id: mascotaId,
         user_id: userId,
         nombre: nombreUsuario + '.pdf',
-        url: url
+        file_path: filePath // <-- SOLO esto
       }]);
 
     if (insertError) {
@@ -124,48 +209,39 @@ export class PetDetailPage implements OnInit {
 
     this.showToast('Documento subido correctamente');
     await this.cargarDocumentos();
+    this.cargarRecientes();
   }
 
-  abrirPDF(url: string) {
-    window.open(url, '_blank');
-  }
+  // Genera el signed URL al vuelo y abre el PDF
+  async abrirPDF(filePath: string) {
+    const { data, error } = await supabase
+      .storage
+      .from('documentos-mascotas')
+      .createSignedUrl(filePath, 60 * 60); // 1 hora
 
-  // --- Selección múltiple y eliminación ---
-  onLongPress(docId: string) {
-    this.seleccionando = true;
-    this.toggleSeleccion(docId);
-  }
-
-  toggleSeleccion(docId: string) {
-    if (this.seleccionados.has(docId)) {
-      this.seleccionados.delete(docId);
-    } else {
-      this.seleccionados.add(docId);
+    if (error || !data) {
+      this.showToast('No se pudo abrir el PDF');
+      return;
     }
+    window.open(data.signedUrl, '_blank');
   }
 
-  cancelarSeleccion() {
-    this.seleccionando = false;
-    this.seleccionados.clear();
-  }
-
-  async eliminarSeleccionados() {
-    const docsAEliminar = this.documentos.filter(doc => this.seleccionados.has(doc.id));
+  // Elimina los archivos seleccionados
+  async eliminarSeleccionados(ids: string[]) {
+    const docsAEliminar = this.documentos.filter(doc => ids.includes(doc.id));
     for (const doc of docsAEliminar) {
-      // Extrae el path del archivo desde la URL firmada (signed URL)
-      const url = new URL(doc.url);
-      const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
-      const path = match ? decodeURIComponent(match[1]) : '';
+      const path = doc.file_path;
       if (path) {
         await supabase.storage.from('documentos-mascotas').remove([path]);
       }
       await supabase.from('documentos').delete().eq('id', doc.id);
     }
     this.showToast('Archivos eliminados');
-    this.cancelarSeleccion();
     await this.cargarDocumentos();
+    this.cargarRecientes();
   }
 
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -175,16 +251,19 @@ export class PetDetailPage implements OnInit {
     toast.present();
   }
 
+  // Navega a la pantalla de edición de mascota
   editarMascota() {
     if (this.mascota) {
       this.router.navigate(['/edit-pet', this.mascota.id]);
     }
   }
 
+  // Vuelve a la pantalla principal
   volverAHome() {
     this.router.navigate(['/home']);
   }
 
+  // Calcula la edad de la mascota
   calcularEdad(fechaNacimiento: string): string {
     if (!fechaNacimiento) return '';
     const nacimiento = new Date(fechaNacimiento);
@@ -196,7 +275,6 @@ export class PetDetailPage implements OnInit {
 
     if (dias < 0) {
       meses--;
-      // Suma los días del mes anterior
       const mesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
       dias += mesAnterior.getDate();
     }
@@ -212,19 +290,7 @@ export class PetDetailPage implements OnInit {
     }
   }
 
-  longPressTimeout: any = null;
-
-  startLongPress(docId: string, event: Event) {
-    this.longPressTimeout = setTimeout(() => {
-      this.seleccionando = true;
-      this.toggleSeleccion(docId);
-    }, 500); // 500 ms para long press
-  }
-
-  cancelLongPress() {
-    clearTimeout(this.longPressTimeout);
-  }
-
+  // Confirma la eliminación de la mascota
   async confirmarEliminarMascota() {
     const confirm = window.confirm('¿Estás seguro de que deseas eliminar esta mascota? Se eliminarán todos sus archivos médicos.');
     if (confirm) {
@@ -232,10 +298,10 @@ export class PetDetailPage implements OnInit {
     }
   }
 
+  // Elimina la mascota y sus archivos asociados
   async eliminarMascota() {
     if (!this.mascota) return;
 
-    // 1. Elimina todos los documentos de la mascota (de Storage y tabla)
     const { data: docs } = await supabase
       .from('documentos')
       .select('*')
@@ -243,10 +309,7 @@ export class PetDetailPage implements OnInit {
 
     if (docs && docs.length > 0) {
       for (const doc of docs) {
-        // Extrae el path del archivo desde la URL firmada
-        const url = new URL(doc.url);
-        const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
-        const path = match ? decodeURIComponent(match[1]) : '';
+        const path = doc.file_path;
         if (path) {
           await supabase.storage.from('documentos-mascotas').remove([path]);
         }
@@ -254,23 +317,18 @@ export class PetDetailPage implements OnInit {
       }
     }
 
-    // 2. Elimina la foto de la mascota si existe
     if (this.mascota.fotoUrl) {
       try {
         const fotoUrl = new URL(this.mascota.fotoUrl);
-        // Regex mejorado para buckets públicos y privados
         const match = fotoUrl.pathname.match(/\/object\/(?:sign\/|public\/)?([a-zA-Z0-9-_]+)\/(.+)$/);
         if (match) {
           const bucket = match[1];
           const path = decodeURIComponent(match[2]);
           await supabase.storage.from(bucket).remove([path]);
         }
-      } catch (e) {
-        // Si la foto no es de Supabase Storage, ignora
-      }
+      } catch (e) {}
     }
 
-    // 3. Elimina la mascota de la tabla mascotas
     await supabase.from('mascotas').delete().eq('id', this.mascota.id);
 
     this.showToast('Mascota eliminada');

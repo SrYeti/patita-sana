@@ -1,3 +1,4 @@
+<!-- Encabezado de la página de edición -->
 <ion-content>
   <ion-header fill="clear">
     <ion-toolbar class="ion-header">
@@ -5,8 +6,11 @@
     </ion-toolbar>
   </ion-header>
 
+  <!-- Formulario de edición de mascota -->
   <ion-content class="ion-padding" class="formulario" fill="clear">
     <form *ngIf="mascota" (ngSubmit)="guardarCambios()">
+
+      <!-- Campo: Nombre -->
       <ion-item class="input-item">
         <ion-label position="floating" class="input-label">Nombre</ion-label>
         <ion-input
@@ -16,6 +20,8 @@
           required
         ></ion-input>
       </ion-item>
+
+      <!-- Campo: Número de Ficha -->
       <ion-item class="input-item">
         <ion-label position="floating" class="input-label"
           >Número de Ficha</ion-label
@@ -26,6 +32,8 @@
           name="fichaNumero"
         ></ion-input>
       </ion-item>
+
+      <!-- Campo: Fecha de nacimiento -->
       <ion-item class="input-item">
         <ion-label position="stacked" class="input-label"
           >Fecha de nacimiento</ion-label
@@ -38,6 +46,8 @@
         >
         </ion-datetime>
       </ion-item>
+
+      <!-- Campo: Sexo -->
       <ion-item class="input-item">
         <ion-label position="floating" class="input-label">Sexo</ion-label>
         <ion-select [(ngModel)]="sexo" name="sexo" required>
@@ -45,10 +55,20 @@
           <ion-select-option value="Hembra">Hembra</ion-select-option>
         </ion-select>
       </ion-item>
+
+      <!-- Campo: Peso -->
       <ion-item class="input-item">
         <ion-label position="floating" class="input-label">Peso (kg)</ion-label>
         <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
       </ion-item>
+
+      <!-- Campo: Foto -->
+      <ion-item class="input-item">
+        <ion-label position="stacked" class="input-label">Foto</ion-label>
+        <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
+      </ion-item>
+
+      <!-- Botones de acción -->
       <ion-button
         expand="block"
         type="submit"
@@ -65,6 +85,7 @@
         fill="clear"
         >Cancelar</ion-button
       >
+
     </form>
   </ion-content>
 </ion-content>

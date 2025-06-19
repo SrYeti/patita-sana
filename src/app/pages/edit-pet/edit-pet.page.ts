@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../models/pet.model';
+import { supabase } from '../../../environments/supabase-client';
 
 @Component({
   selector: 'app-edit-pet',
@@ -14,12 +15,14 @@ import { Pet } from '../../models/pet.model';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class EditPetPage implements OnInit {
+  // Propiedades del formulario
   mascota: Pet | null = null;
   nombre = '';
   fichaNumero = '';
   fechaNacimiento: string = '';
   sexo = '';
   peso: number | null = null;
+  nuevaFotoUrl: string | null = null; // Para guardar la nueva foto si se sube
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +31,7 @@ export class EditPetPage implements OnInit {
     private toastCtrl: ToastController
   ) {}
 
+  // Inicializa el formulario con los datos de la mascota
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -42,6 +46,7 @@ export class EditPetPage implements OnInit {
     }
   }
 
+  // Guarda los cambios realizados en la mascota
   async guardarCambios() {
     if (!this.mascota) return;
     try {
@@ -50,7 +55,9 @@ export class EditPetPage implements OnInit {
         fichaNumero: this.fichaNumero,
         fechaNacimiento: this.fechaNacimiento,
         sexo: this.sexo,
-        peso: this.peso ?? 0
+        peso: this.peso ?? 0,
+        // Si se subió una nueva foto, actualiza el campo fotoUrl
+        ...(this.nuevaFotoUrl ? { fotoUrl: this.nuevaFotoUrl } : {})
       });
       this.showToast('Datos actualizados');
       this.router.navigate(['/pet-detail', this.mascota.id]);
@@ -59,6 +66,33 @@ export class EditPetPage implements OnInit {
     }
   }
 
+  // Maneja la selección de una nueva foto
+  async onFotoSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (!file || !this.mascota) return;
+
+    const filePath = `mascota_${this.mascota.id}/${Date.now()}_${file.name}`;
+    const { error: uploadError } = await supabase.storage
+      .from('fotos-mascotas')
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) {
+      this.showToast('Error al subir la foto');
+      return;
+    }
+
+    // Obtiene la URL pública de la foto
+    const { data } = supabase.storage
+      .from('fotos-mascotas')
+      .getPublicUrl(filePath);
+
+    if (data && data.publicUrl) {
+      this.nuevaFotoUrl = data.publicUrl;
+      this.showToast('Foto subida correctamente');
+    }
+  }
+
+  // Muestra un mensaje toast
   async showToast(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -68,6 +102,7 @@ export class EditPetPage implements OnInit {
     toast.present();
   }
 
+  // Cancela la edición y vuelve al detalle de la mascota
   cancelar() {
     if (this.mascota) {
       this.router.navigate(['/pet-detail', this.mascota.id]);
