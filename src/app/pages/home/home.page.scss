@@ -1,28 +1,257 @@
 @import url("https://fonts.cdnfonts.com/css/century-gothic-paneuropean");
 
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 0 16px 0;
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  padding-top: calc(100vh - 33vh);
+}
+
+ion-header.header, .header {
+  --background: var(--green-matcha);
+  --color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 24px;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  margin-top: 0 !important;
+  top: 0 !important;
+  position: sticky;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-toolbar.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+ion-buttons[slot="start"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+ion-title.header {
+  flex: 1 1 auto;
+  text-align: center;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
 ion-content {
-  --background: #f8f8f0 !important; /* o el color que quieras */
+  --background: transparent !important;
+  background: transparent !important;
+  --padding-top: 0 !important;
 }
 
 .ion-card {
-  --background: #b0cca5;
-  --color: #333;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --background: var(--green-matcha-light);
+  --color: var(--text-dark);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  margin-bottom: 18px;
+  transition: transform 0.15s;
+}
+.ion-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(164, 192, 132, 0.18);
 }
 
-.header {
-  --background: #a4c084;
+ion-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--green-matcha-dark);
+}
+ion-card-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+ion-card.add-pet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  background: var(--green-matcha);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: 2px dashed var(--green-matcha-dark);
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+ion-card.add-pet:hover {
+  background: var(--green-matcha-dark);
+  border-color: var(--green-matcha);
+}
+
+img[alt=""] {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin: 0;
+  display: block;
+  box-shadow: none;
+  border: none;
+  clip-path: inset(0 0 16.66% 0);
+  position: relative;
+  top: 0;
+}
+
+.home-container {
+  position: relative;
+  z-index: 2;
+}
+
+ion-header.header, .header {
+  --background: var(--green-matcha);
   --color: #fff;
-  font-weight: light;
+  font-weight: 600;
   text-align: center;
   font-size: 24px;
-  font-family: "century-gothic-paneuropean", sans-serif;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  margin-top: 0 !important;
+  top: 0 !important;
+  position: sticky;
+  z-index: 10;
 }
 
-.logout {
-  --background: #f8f8f0;
-  --color: #333;
-  font-size: 16px;
+.main-content-grid {
+  margin-top: -24px !important;
+}
+
+ion-content {
+  --padding-top: 0 !important;
+}
+
+/* Slide menu estilos */
+.side-bar-header {
+  --background: var(--green-matcha-dark);
+  background: var(--green-matcha-dark);
+  color: #fff;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  box-shadow: 2px 0 12px rgba(164, 192, 132, 0.10);
+}
+
+ion-menu .header {
+  --background: var(--green-matcha-dark);
+  background: var(--green-matcha-dark) !important;
+  --color: #fff;
+  color: #fff !important;
+  font-size: 22px;
+  font-weight: 700;
   text-align: center;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-menu .header ion-title {
+  color: #fff !important;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-weight: 700;
+}
+
+ion-list.logout {
+  background: #fff !important;
+  box-shadow: none;
+  margin-top: 0;
+  padding-top: 24px;
+  border-radius: 0;
+}
+
+ion-item.logout {
+  --background: #fff !important;
+  --color: var(--text-dark) !important;
+  font-size: 18px;
+  border-radius: 10px;
+  margin: 8px 16px;
+  transition: background 0.2s;
+  box-shadow: none !important;
+}
+ion-item.logout.user {
+  border: 1px solid var(--green-matcha-light);
+  font-weight: 600;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+ion-item.logout:hover {
+  background: var(--green-matcha-light);
+  color: var(--green-matcha-dark);
+}
+
+ion-label.ion-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+  text-align: left;
+}
+
+ion-item.logout[button] {
+  --background: #fff !important;
+  --color: var(--text-dark) !important;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+  border: 1px solid var(--green-matcha-light);
+  box-shadow: none !important;
+  filter: none !important;
+}
+ion-item.logout[button]:hover {
+  --background: var(--green-matcha-light) !important;
+  --color: var(--green-matcha-dark) !important;
+}
+
+ion-menu .header + ion-content {
+  background: #fff !important;
+  border-radius: 0 !important;
+}
+
+body.menu-open {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+ion-menu {
+  --border-radius: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+ion-menu.menu-enabled {
+  overflow: hidden !important;
+  pointer-events: auto;
 }

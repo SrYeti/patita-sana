@@ -1,5 +1,5 @@
-<ion-content class="ion-padding all-content">
-  <div class="all-content">
+<ion-content class="ion-padding login-content">
+  <div class="login-container">
     <div class="login-banner">
       <img src="assets/perrio.jpg" alt="Login Banner" />
       <div class="login-text">
@@ -20,9 +20,7 @@
         ></ion-input>
       </ion-item>
       <ion-item class="input-item">
-        <ion-label position="floating" class="input-label"
-          >Contraseña</ion-label
-        >
+        <ion-label position="floating" class="input-label">Contraseña</ion-label>
         <ion-input
           type="password"
           [(ngModel)]="password"
@@ -32,9 +30,9 @@
         ></ion-input>
       </ion-item>
 
-      <ion-button class="login-button" expand="block" fill="clear" type="submit"
-        >Entrar</ion-button
-      >
+      <ion-button class="login-button" expand="block" fill="solid" type="submit">
+        Entrar
+      </ion-button>
     </form>
 
     <ion-button
@@ -42,18 +40,13 @@
       fill="clear"
       (click)="resetPassword()"
       class="forgot-password"
-      style="margin-top: 8px"
     >
       ¿Olvidaste tu contraseña?
     </ion-button>
 
-    <div style="text-align: center; margin-top: 16px" class="register-link">
-      No eres miembro?
-      <a
-        style="color: var(--green-matcha); cursor: pointer"
-        (click)="goToRegister()"
-        >Regístrate ahora</a
-      >
+    <div class="register-link">
+      <span>No eres miembro?</span>
+      <a (click)="goToRegister()">Regístrate ahora</a>
     </div>
   </div>
 </ion-content>
