@@ -15,21 +15,17 @@
       <ion-content class="header">
         <ion-list class="logout">
           <ion-item lines="none" class="logout">
+            <!--
             <ion-avatar slot="start">
-              <ion-icon
-                name="person-circle"
-                style="font-size: 2.5em"
-              ></ion-icon>
-            </ion-avatar>
+              
+            </ion-avatar>-->
             <ion-label fill="clear" class="ion-card">
               <h2>{{ userName }}</h2>
             </ion-label>
           </ion-item>
           <ion-item button (click)="logout()" class="logout">
-            <ion-icon name="log-out-outline" slot="start"></ion-icon>
             <ion-label>Cerrar sesión</ion-label>
           </ion-item>
-          <!-- Aquí puedes agregar más opciones, como eliminar mascota, modo oscuro, etc. -->
         </ion-list>
       </ion-content>
     </ion-menu>
@@ -80,10 +76,8 @@
                 align-items: center;
                 justify-content: center;
                 height: 160px;
-                cursor: pointer;
-              "
+                cursor: pointer;"
             >
-              <ion-icon name="add" size="large"></ion-icon>
               <div>Añadir Mascota</div>
             </ion-card>
           </ion-col>
