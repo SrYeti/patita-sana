@@ -13,26 +13,26 @@
   font-size: 14px !important;
   margin-bottom: 5px;
   transform-origin: left top !important;
-  white-space: nowrap; /* Evita que el label se parta en varias líneas */
+  white-space: nowrap;
+  /* Nueva propiedad para evitar el escalado */
+  transform: none !important;
 }
 
-/* Estado flotante del label */
+/* Elimina completamente las transformaciones del estado flotante */
 .item-label-floating.sc-ion-input-md-h,
 .item-label-floating.sc-ion-input-ios-h {
-  transform: translate3d(0, 0, 0) scale(0.75) !important;
-  margin-top: -8px !important;
+  transform: none !important;
+  margin-top: 0 !important; /* Opcional: ajusta según necesites */
+  color: #666666 !important;
+  font-size: 14px !important;
 }
 
-/* Estado enfocado - Efecto matcha */
+/* Mantiene el color verde cuando está enfocado pero sin cambios de tamaño */
 .item-has-focus .input-label,
 .item-has-value .input-label {
-  color: var(--green-matcha) !important;
-}
-
-/* Estado enfocado del input */
-.item-has-focus .custom-input {
-  --border-color: var(--green-matcha-dark) !important;
-  box-shadow: 0 0 0 2px var(--green-matcha-light);
+  color: #a4c084 !important;
+  font-size: 14px !important;
+  transform: none !important;
 }
 
 .custom-input {
@@ -47,14 +47,30 @@
   --border-color: #a4c084 !important;
   --border-style: solid !important;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  margin-top: 8px; /* Espacio adicional para el label /
+  margin-top: 8px;
+  --placeholder-color: #666666 !important; /* Color café/gris */
+  --placeholder-opacity: 0.8 !important; /* Espacio adicional para el label /
 transition: all 0.3s ease; / Transición suave para efectos */
 }
 
-/* Placeholder con estilo matcha */
-.custom-input::placeholder {
-  color: var(--text-light);
-  opacity: 0.8;
+/* Esto debe funcionar en Ionic 5+ */
+ion-input::part(placeholder) {
+  color: #666666 !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
+}
+
+/* Input cuando está enfocado */
+.item-has-focus .custom-input {
+  --border-color: #8aa86c !important; /* Verde matcha más oscuro */
+  --color: #333333 !important; /* Texto oscuro siempre */
+  box-shadow: 0 0 0 2px #c0d8a4; /* Sutil halo verde claro */
+}
+
+ion-input .native-input::placeholder {
+  color: #666666 !important;
+  opacity: 1 !important;
+  font-size: 14px !important;
 }
 
 .all-content {
@@ -77,4 +93,11 @@ transition: all 0.3s ease; / Transición suave para efectos */
   margin-top: 20px;
   margin-left: 25px;
   margin-right: 25px;
+}
+
+.register-link {
+  color: #a4c084;
+  text-decoration: underline;
+  font-size: 14px;
+  padding-bottom: 70px;
 }

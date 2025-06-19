@@ -72,8 +72,8 @@ export class SymptomFormPage implements OnInit {
   async onSubmit() {
     if (this.symptomForm.valid) {
       const symptomData = {
-        mascota_id: this.currentPetId, // Debes obtener esto de tu página anterior
-        user_id: this.currentUserId, // Obtenido de tu servicio de autenticación
+        //mascota_id: this.currentPetId, // Debes obtener esto de tu página anterior
+        //user_id: this.currentUserId, // Obtenido de tu servicio de autenticación
         fecha_creacion: new Date().toISOString(),
         descripcion: this.symptomForm.value.description,
         vomitos: this.symptomForm.value.hasVomited,
@@ -83,11 +83,11 @@ export class SymptomFormPage implements OnInit {
       };
 
       try {
-        await this.symptomService.addSymptom(symptomData);
+        //await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
-        this.router.navigate(['/medical-file', this.currentPetId]);
+        //this.router.navigate(['/medical-file', this.currentPetId]);
       } catch (error) {
-        await this.presentToast('Error al guardar', 'danger');
+        //await this.presentToast('Error al guardar', 'danger');
       }
     }
   }
