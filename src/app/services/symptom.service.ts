@@ -7,7 +7,7 @@ import { PetSymptom } from 'src/app/models/pet-symptom.model';
   providedIn: 'root',
 })
 export class SymptomService {
-  private tableName = 'sintomas_mascotas'; // Nombre más descriptivo
+  private tableName = 'sintomas'; // Nombre más descriptivo
 
   constructor(private supabase: SupabaseService) {}
 
