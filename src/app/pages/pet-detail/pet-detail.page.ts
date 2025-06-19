@@ -31,8 +31,6 @@ export class PetDetailPage implements OnInit {
   sintomas: PetSymptom[] = [];
   recientes: Array<any> = [];
 
-  seleccionando = false;
-  seleccionados = new Set<string>();
 
   @ViewChild('pdfInput', { static: false }) pdfInput!: ElementRef<HTMLInputElement>;
 
@@ -129,9 +127,13 @@ export class PetDetailPage implements OnInit {
         documentos: this.documentos
       }
     });
-    modal.onDidDismiss().then(result => {
+    modal.onDidDismiss().then(async result => {
       if (result.data === 'subir') {
         this.abrirSelectorPDF();
+      } else if (result.data?.verPDF) {
+        await this.abrirPDF(result.data.verPDF);
+      } else if (result.data?.eliminar && Array.isArray(result.data.eliminar)) {
+        await this.eliminarSeleccionados(result.data.eliminar);
       }
     });
     await modal.present();
@@ -203,29 +205,9 @@ export class PetDetailPage implements OnInit {
     window.open(data.signedUrl, '_blank');
   }
 
-  // --- Selección múltiple y eliminación ---
-  onLongPress(docId: string) {
-    this.seleccionando = true;
-    this.toggleSeleccion(docId);
-  }
-
-  toggleSeleccion(docId: string) {
-    if (this.seleccionados.has(docId)) {
-      this.seleccionados.delete(docId);
-    } else {
-      this.seleccionados.add(docId);
-    }
-  }
-
-  cancelarSeleccion() {
-    this.seleccionando = false;
-    this.seleccionados.clear();
-  }
-
-  async eliminarSeleccionados() {
-    const docsAEliminar = this.documentos.filter(doc => this.seleccionados.has(doc.id));
+  async eliminarSeleccionados(ids: string[]) {
+    const docsAEliminar = this.documentos.filter(doc => ids.includes(doc.id));
     for (const doc of docsAEliminar) {
-      // Elimina usando el file_path
       const path = doc.file_path;
       if (path) {
         await supabase.storage.from('documentos-mascotas').remove([path]);
@@ -233,7 +215,6 @@ export class PetDetailPage implements OnInit {
       await supabase.from('documentos').delete().eq('id', doc.id);
     }
     this.showToast('Archivos eliminados');
-    this.cancelarSeleccion();
     await this.cargarDocumentos();
     this.cargarRecientes();
   }
@@ -281,19 +262,6 @@ export class PetDetailPage implements OnInit {
     } else {
       return `${meses} mes${meses !== 1 ? 'es' : ''} ${dias} día${dias !== 1 ? 's' : ''}`;
     }
-  }
-
-  longPressTimeout: any = null;
-
-  startLongPress(docId: string, event: Event) {
-    this.longPressTimeout = setTimeout(() => {
-      this.seleccionando = true;
-      this.toggleSeleccion(docId);
-    }, 500);
-  }
-
-  cancelLongPress() {
-    clearTimeout(this.longPressTimeout);
   }
 
   async confirmarEliminarMascota() {

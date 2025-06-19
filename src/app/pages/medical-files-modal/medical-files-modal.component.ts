@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // <-- AGREGA ESTO
 
 @Component({
   selector: 'app-medical-files-modal',
@@ -19,11 +20,16 @@ import { CommonModule } from '@angular/common';
       </ion-button>
       <ion-list>
         <ion-item *ngFor="let doc of documentos">
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="seleccionados[doc.id]"
+            (ionChange)="onSeleccionChange()"
+          ></ion-checkbox>
           <ion-label>
             <strong>{{ doc.nombre }}</strong><br />
             <small>{{ doc.fecha_subida | date: 'short' }}</small>
           </ion-label>
-          <ion-button fill="clear" (click)="verPDF(doc.url)">
+          <ion-button fill="clear" (click)="verPDF(doc.file_path)">
             Ver PDF
           </ion-button>
         </ion-item>
@@ -32,12 +38,26 @@ import { CommonModule } from '@angular/common';
         <p>No hay documentos médicos registrados.</p>
       </ion-text>
     </ion-content>
+    <ion-footer *ngIf="idsSeleccionados.length > 0">
+      <ion-toolbar>
+        <ion-button expand="block" color="danger" (click)="eliminarSeleccionados()">
+          Eliminar ({{ idsSeleccionados.length }})
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
   `,
   standalone: true,
-  imports: [IonicModule, CommonModule]
+  imports: [IonicModule, CommonModule, FormsModule] // <-- AGREGA FormsModule AQUÍ
 })
 export class MedicalFilesModalComponent {
   @Input() documentos: any[] = [];
+  @Output() eliminar = new EventEmitter<string[]>();
+
+  seleccionados: { [id: string]: boolean } = {};
+
+  get idsSeleccionados(): string[] {
+    return Object.keys(this.seleccionados).filter(id => this.seleccionados[id]);
+  }
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -49,7 +69,15 @@ export class MedicalFilesModalComponent {
     this.modalCtrl.dismiss('subir');
   }
 
-  verPDF(url: string) {
-    window.open(url, '_blank');
+  verPDF(filePath: string) {
+    this.modalCtrl.dismiss({ verPDF: filePath });
+  }
+
+  onSeleccionChange() {
+    // Solo para refrescar la vista
+  }
+
+  eliminarSeleccionados() {
+    this.modalCtrl.dismiss({ eliminar: this.idsSeleccionados });
   }
 }
