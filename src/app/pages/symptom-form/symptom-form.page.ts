@@ -4,9 +4,8 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SymptomService } from '../../services/symptom.service'; // Ajusta el path si es necesario
-import { SupabaseAuthService } from '../../services/supabase-auth.service'; // Ajusta el path si es necesario
-import { PetSymptom } from '../../models/pet-symptom.model';
+import { SymptomService } from '../../services/symptom.service';
+import { SupabaseAuthService } from '../../services/supabase-auth.service';
 
 import {
   IonContent,
@@ -22,6 +21,8 @@ import {
   IonIcon,
   IonListHeader,
   IonDatetime,
+  IonTextarea,
+  IonToggle,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -30,6 +31,9 @@ import {
   styleUrls: ['./symptom-form.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonListHeader,
     IonButton,
     IonList,
@@ -41,11 +45,10 @@ import {
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     IonIcon,
     IonDatetime,
+    IonTextarea,
+    IonToggle,
   ],
 })
 export class SymptomFormPage implements OnInit {
@@ -66,10 +69,7 @@ export class SymptomFormPage implements OnInit {
   }
 
   async ngOnInit() {
-    // Obtener el id de la mascota desde la URL
     this.currentPetId = this.route.snapshot.paramMap.get('id') ?? '';
-
-    // Obtener el id del usuario autenticado
     const { data } = await this.authService.getCurrentUser();
     this.currentUserId = data?.user?.id ?? '';
   }
@@ -87,8 +87,8 @@ export class SymptomFormPage implements OnInit {
 
   async onSubmit() {
     if (this.symptomForm.valid) {
-      const symptomData: PetSymptom = {
-        id: '', // Supabase lo genera
+      // NO enviar el campo id
+      const symptomData = {
         mascota_id: this.currentPetId,
         user_id: this.currentUserId,
         fecha_creacion: this.symptomForm.value.dateTime,
@@ -103,8 +103,9 @@ export class SymptomFormPage implements OnInit {
         await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
         this.router.navigate(['/pet-detail', this.currentPetId]);
-      } catch (error) {
-        await this.presentToast('Error al guardar');
+      } catch (error: any) {
+        console.error('Error al guardar síntoma:', error);
+        await this.presentToast('Error al guardar: ' + (error?.message || ''));
       }
     }
   }
@@ -116,5 +117,9 @@ export class SymptomFormPage implements OnInit {
       color: 'success',
     });
     toast.present();
+  }
+
+  volverAPetDetail() {
+    this.router.navigate(['/pet-detail', this.currentPetId]);
   }
 }
