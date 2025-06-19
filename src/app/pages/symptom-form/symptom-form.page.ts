@@ -45,7 +45,6 @@ import {
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonIcon,
     IonDatetime,
     IonTextarea,
     IonToggle,
