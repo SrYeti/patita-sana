@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PetService } from '../../services/pet.service';
 import { Pet } from '../../models/pet.model';
+import { supabase } from '../../../environments/supabase-client';
 
 @Component({
   selector: 'app-edit-pet',
@@ -20,6 +21,7 @@ export class EditPetPage implements OnInit {
   fechaNacimiento: string = '';
   sexo = '';
   peso: number | null = null;
+  nuevaFotoUrl: string | null = null; // Para guardar la nueva foto si se sube
 
   constructor(
     private route: ActivatedRoute,
@@ -50,12 +52,39 @@ export class EditPetPage implements OnInit {
         fichaNumero: this.fichaNumero,
         fechaNacimiento: this.fechaNacimiento,
         sexo: this.sexo,
-        peso: this.peso ?? 0
+        peso: this.peso ?? 0,
+        // Si se subió una nueva foto, actualiza el campo fotoUrl
+        ...(this.nuevaFotoUrl ? { fotoUrl: this.nuevaFotoUrl } : {})
       });
       this.showToast('Datos actualizados');
       this.router.navigate(['/pet-detail', this.mascota.id]);
     } catch (error: any) {
       this.showToast(error.message || 'Error al actualizar');
+    }
+  }
+
+  async onFotoSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (!file || !this.mascota) return;
+
+    const filePath = `mascota_${this.mascota.id}/${Date.now()}_${file.name}`;
+    const { error: uploadError } = await supabase.storage
+      .from('fotos-mascotas')
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) {
+      this.showToast('Error al subir la foto');
+      return;
+    }
+
+    // Obtén la URL pública de la foto
+    const { data } = supabase.storage
+      .from('fotos-mascotas')
+      .getPublicUrl(filePath);
+
+    if (data && data.publicUrl) {
+      this.nuevaFotoUrl = data.publicUrl;
+      this.showToast('Foto subida correctamente');
     }
   }
 

@@ -49,6 +49,10 @@
         <ion-label position="floating" class="input-label">Peso (kg)</ion-label>
         <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
       </ion-item>
+      <ion-item class="input-item">
+        <ion-label position="stacked" class="input-label">Foto</ion-label>
+        <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
+      </ion-item>
       <ion-button
         expand="block"
         type="submit"
