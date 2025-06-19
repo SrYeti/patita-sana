@@ -11,7 +11,6 @@
 <!-- Formulario de registro de síntomas -->
 <ion-content>
   <form [formGroup]="symptomForm" (ngSubmit)="onSubmit()" class="ion-padding">
-
     <!-- Campo: Fecha y Hora -->
     <ion-item>
       <ion-label position="stacked">Fecha y Hora</ion-label>
@@ -74,9 +73,13 @@
     </ion-button>
 
     <!-- Botón: Cancelar -->
-    <ion-button expand="block" color="medium" type="button" (click)="volverAPetDetail()">
+    <ion-button
+      expand="block"
+      color="medium"
+      type="button"
+      (click)="volverAPetDetail()"
+    >
       Cancelar
     </ion-button>
-
   </form>
 </ion-content>
