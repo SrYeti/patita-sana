@@ -6,52 +6,74 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <!-- Botón para volver al inicio -->
-  <ion-button
-    expand="block"
-    fill="clear"
-    (click)="volverAHome()"
-    class="volver-button"
-  >
-    Volver ☘︎
-  </ion-button>
-
-  <!-- Tarjeta con información de la mascota -->
-  <ion-card *ngIf="mascota" class="ion-card">
+  <!-- Foto de perfil redonda -->
+  <div class="mascota-foto-container" *ngIf="mascota?.fotoUrl">
     <img
-      *ngIf="mascota.fotoUrl"
-      [src]="mascota.fotoUrl"
+      [src]="mascota?.fotoUrl"
       alt="Foto de la mascota"
       class="mascota-foto"
     />
-    <ion-card-header>
-      <ion-card-title>{{ mascota.nombre | capitalize }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div>Edad: {{ calcularEdad(mascota.fechaNacimiento) }}</div>
-      <div>Sexo: {{ mascota.sexo }}</div>
-      <div>Peso: {{ mascota.peso }} kg</div>
-      <div>N° ficha: {{ mascota.fichaNumero }}</div>
-    </ion-card-content>
-  </ion-card>
+  </div>
 
-  <!-- Botón para editar datos de la mascota -->
-  <ion-button
-    expand="block"
-    (click)="editarMascota()"
-    fill="clear"
-    class="editar-button"
-  >
-    Editar datos
-  </ion-button>
-  
+  <!-- Nombre de la mascota -->
+  <h2 class="mascota-nombre">{{ (mascota?.nombre || '') |capitalize }}</h2>
+
+  <div class="profile-operations">
+    <ion-button
+      expand="block"
+      fill="clear"
+      (click)="volverAHome()"
+      class="volver-button"
+    >
+      Volver
+    </ion-button>
+    <!-- Botón para editar datos de la mascota -->
+    <ion-button
+      expand="block"
+      (click)="editarMascota()"
+      fill="clear"
+      class="editar-button"
+    >
+      Editar datos
+    </ion-button>
+  </div>
+
+  <!-- Datos en tabla -->
+  <table class="mascota-datos" *ngIf="mascota">
+    <tr>
+      <td>Edad:</td>
+      <td>{{ calcularEdad(mascota.fechaNacimiento) }}</td>
+    </tr>
+    <tr>
+      <td>Sexo:</td>
+      <td>{{ mascota.sexo }}</td>
+    </tr>
+    <tr>
+      <td>Peso:</td>
+      <td>{{ mascota.peso }} kg</td>
+    </tr>
+    <tr>
+      <td>N° ficha:</td>
+      <td>{{ mascota.fichaNumero }}</td>
+    </tr>
+  </table>
+
   <!-- Acciones: Archivos médicos y Síntomas -->
   <div class="pet-detail-actions ion-margin-bottom">
-    <ion-button expand="block" (click)="abrirModalArchivos()">
+    <ion-button
+      expand="block"
+      (click)="abrirModalArchivos()"
+      fill="clear"
+      class="archivos-button"
+    >
       Archivos médicos
     </ion-button>
-    <ion-button expand="block" color="secondary" (click)="abrirModalSintomas()">
+    <ion-button
+      expand="block"
+      class="sintomas-button"
+      fill="clear"
+      (click)="abrirModalSintomas()"
+    >
       Síntomas
     </ion-button>
   </div>
@@ -66,15 +88,19 @@
         <ion-item *ngFor="let item of recientes">
           <ion-label>
             <ng-container *ngIf="item.tipo === 'documento'; else sintomaTpl">
-              <strong>Documento:</strong> {{ item.nombre }}<br>
+              <strong>Documento:</strong> {{ item.nombre }}<br />
               <small>{{ item.fecha | date:'short' }}</small>
             </ng-container>
             <ng-template #sintomaTpl>
-              <strong>Síntoma:</strong> {{ item.descripcion | slice:0:30 }}<br>
+              <strong>Síntoma:</strong> {{ item.descripcion | slice:0:30 }}<br />
               <small>{{ item.fecha | date:'short' }}</small>
             </ng-template>
           </ion-label>
-          <ion-button *ngIf="item.tipo === 'documento'" fill="clear" (click)="abrirPDF(item.url)">
+          <ion-button
+            *ngIf="item.tipo === 'documento'"
+            fill="clear"
+            (click)="abrirPDF(item.url)"
+          >
             Ver PDF
           </ion-button>
         </ion-item>
@@ -103,5 +129,4 @@
     style="display: none"
     (change)="onPDFSelected($event)"
   />
-
 </ion-content>

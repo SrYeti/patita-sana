@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -103,8 +108,9 @@ export class SymptomFormPage implements OnInit {
       };
 
       try {
-        await this.symptomService.addSymptom(symptomData);
+        //await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
+
         this.router.navigate(['/pet-detail', this.currentPetId]);
       } catch (error: any) {
         console.error('Error al guardar síntoma:', error);

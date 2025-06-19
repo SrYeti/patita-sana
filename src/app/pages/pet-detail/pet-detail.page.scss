@@ -9,28 +9,17 @@ ion-content {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.editar-button {
-  --background: #fff;
-  --color: #a4c084;
-  border-radius: 10px;
-  border-width: 5px;
-  border-color: #a4c084;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin-top: 20px;
-  margin-left: 25px;
-  margin-right: 25px;
-}
-
 .eliminar-button {
-  --background: #a4c084;
+  --background: #bfaf36;
   --color: #fff;
   border-radius: 10px;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 15px;
 
   margin-left: 25px;
   margin-right: 25px;
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
 }
 
 .texto-archivos {
@@ -49,6 +38,8 @@ ion-content {
   margin-bottom: 30px;
   margin-left: 25px;
   margin-right: 25px;
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
 }
 
 .header {
@@ -60,13 +51,190 @@ ion-content {
   font-family: "century-gothic-paneuropean", sans-serif;
 }
 
-.volver-button {
-  --color: #a4c084;
-
+.sintomas-button {
+  background: #a4c084;
+  --color: #fff;
   border-radius: 10px;
   padding: 10px 20px;
   font-size: 16px;
   margin-top: 20px;
   margin-left: 25px;
   margin-right: 25px;
+}
+
+.archivos-button {
+  background: #fff;
+  --color: #a4c084;
+  border-radius: 10px;
+  border-width: 5px;
+  border-color: #a4c084;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
+}
+
+.pet-detail-actions {
+  display: flex; /* Activa flexbox */
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 15px; /* Espacio entre botones */
+  margin-top: 20px; /* Mantienes el margen superior */
+  font-size: 5px; // Tamaño de fuente más pequeño
+  padding: 4px 10px; // Menos padding
+  height: 32px; // Menor altura
+  --border-radius: 8px;
+}
+
+.sintomas-button,
+.archivos-button {
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 0; /* Elimina márgenes laterales */
+  flex: 1; /* Opcional: hace que ambos botones crezcan igual */
+  max-width: 200px; /* Opcional: controla el ancho máximo */
+}
+
+.sintomas-button {
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
+  background: #a4c084;
+  --color: #fff !important;
+  border: 3px solid #fff;
+  font-size: 10px;
+  height: 28px; // Ajusta la altura del botón
+  padding: 0 12px; // Ajusta el padding horizontal
+  align-items: center; // Centra el texto verticalmente
+  justify-content: center;
+}
+
+.archivos-button {
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
+  background: #fff;
+  --color: #a4c084;
+  border: 3px solid #a4c084;
+  font-size: 10px;
+  height: 28px; // Ajusta la altura del botón
+  padding: 0 12px; // Ajusta el padding horizontal
+  align-items: center; // Centra el texto verticalmente
+  justify-content: center;
+}
+
+.profile-operations {
+  display: flex;
+  gap: 10px; // Espacio entre botones
+  justify-content: center; // Centra los botones
+}
+
+.profile-operations ion-button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.volver-button {
+  --background: #a4c084;
+  --color: #fff;
+  border-radius: 10px;
+
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
+  font-size: 12px;
+  height: 28px; // Ajusta la altura del botón
+  padding: 0 12px; // Ajusta el padding horizontal
+  align-items: center; // Centra el texto verticalmente
+  justify-content: center;
+}
+
+.editar-button {
+  --background: #fff;
+  --color: #a4c084;
+  border-radius: 10px;
+  border-width: 5px;
+  border-color: #a4c084;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 12px;
+  text-transform: none !important;
+  font-family: inherit; // Opcional: usa la fuente heredada
+  height: 28px; // Ajusta la altura del botón
+  padding: 0 12px; // Ajusta el padding horizontal
+  align-items: center; // Centra el texto verticalmente
+  justify-content: center;
+}
+
+.mascota-foto-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.mascota-foto {
+  width: 190px;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #a4c084;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.mascota-nombre {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 30px;
+  color: #4a4a4a;
+}
+
+.mascota-datos {
+  margin: 24px auto 16px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 220px;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(164, 192, 132, 0.1);
+  overflow: hidden;
+  font-size: 1.08rem;
+  color: #4a4a4a;
+}
+
+.mascota-datos td {
+  padding: 14px 22px;
+  border-bottom: 1px solid #e8f0e5;
+}
+
+.mascota-datos tr:last-child td {
+  border-bottom: none;
+}
+
+.mascota-datos td:first-child {
+  font-weight: 600;
+  color: #7a9c5c;
+  background: #f6fbf3;
+  width: 40%;
+}
+
+.mascota-datos td:last-child {
+  text-align: right;
+  color: #4a4a4a;
+}
+
+@media (max-width: 500px) {
+  .mascota-datos {
+    min-width: 90vw;
+    font-size: 1rem;
+  }
+  .mascota-datos td {
+    padding: 10px 8px;
+  }
 }
