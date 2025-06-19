@@ -36,8 +36,6 @@ export class PetDetailPage implements OnInit {
 
   @ViewChild('pdfInput', { static: false }) pdfInput!: ElementRef<HTMLInputElement>;
 
-  // Quitar modalSintomasAbierta y modalArchivosAbierta
-
   constructor(
     private route: ActivatedRoute,
     private petService: PetService,
@@ -93,7 +91,7 @@ export class PetDetailPage implements OnInit {
       tipo: 'documento',
       nombre: doc.nombre,
       fecha: new Date(doc.fecha_subida),
-      url: doc.url
+      file_path: doc.file_path // Usar file_path
     }));
 
     const sintomas = this.sintomas.map(sintoma => ({
@@ -171,24 +169,14 @@ export class PetDetailPage implements OnInit {
       return;
     }
 
-    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
-      .from('documentos-mascotas')
-      .createSignedUrl(filePath, 60 * 60);
-
-    if (signedUrlError || !signedUrlData) {
-      this.showToast('Error al obtener la URL del PDF');
-      return;
-    }
-
-    const url = signedUrlData.signedUrl;
-
+    // NO guardes el signed URL, solo el file_path
     const { error: insertError } = await supabase
       .from('documentos')
       .insert([{
         mascota_id: mascotaId,
         user_id: userId,
         nombre: nombreUsuario + '.pdf',
-        url: url
+        file_path: filePath // <-- SOLO esto
       }]);
 
     if (insertError) {
@@ -201,8 +189,18 @@ export class PetDetailPage implements OnInit {
     this.cargarRecientes();
   }
 
-  abrirPDF(url: string) {
-    window.open(url, '_blank');
+  // Genera el signed URL al vuelo y abre el PDF
+  async abrirPDF(filePath: string) {
+    const { data, error } = await supabase
+      .storage
+      .from('documentos-mascotas')
+      .createSignedUrl(filePath, 60 * 60); // 1 hora
+
+    if (error || !data) {
+      this.showToast('No se pudo abrir el PDF');
+      return;
+    }
+    window.open(data.signedUrl, '_blank');
   }
 
   // --- Selección múltiple y eliminación ---
@@ -227,9 +225,8 @@ export class PetDetailPage implements OnInit {
   async eliminarSeleccionados() {
     const docsAEliminar = this.documentos.filter(doc => this.seleccionados.has(doc.id));
     for (const doc of docsAEliminar) {
-      const url = new URL(doc.url);
-      const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
-      const path = match ? decodeURIComponent(match[1]) : '';
+      // Elimina usando el file_path
+      const path = doc.file_path;
       if (path) {
         await supabase.storage.from('documentos-mascotas').remove([path]);
       }
@@ -316,9 +313,7 @@ export class PetDetailPage implements OnInit {
 
     if (docs && docs.length > 0) {
       for (const doc of docs) {
-        const url = new URL(doc.url);
-        const match = url.pathname.match(/\/object\/sign\/documentos-mascotas\/(.+)$/);
-        const path = match ? decodeURIComponent(match[1]) : '';
+        const path = doc.file_path;
         if (path) {
           await supabase.storage.from('documentos-mascotas').remove([path]);
         }
