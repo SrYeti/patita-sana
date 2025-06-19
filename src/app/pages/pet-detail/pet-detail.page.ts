@@ -112,12 +112,23 @@ export class PetDetailPage implements OnInit {
         mascotaId: this.mascota?.id ?? ''
       }
     });
-    modal.onDidDismiss().then(result => {
+    modal.onDidDismiss().then(async result => {
       if (result.data === 'nuevo' && this.mascota) {
         this.router.navigate(['/symptom-form', this.mascota.id]);
+      } else if (result.data?.eliminar && Array.isArray(result.data.eliminar)) {
+        await this.eliminarSintomasSeleccionados(result.data.eliminar);
       }
     });
     await modal.present();
+  }
+
+  async eliminarSintomasSeleccionados(ids: string[]) {
+    for (const id of ids) {
+      await this.symptomService.deleteSymptom(id);
+    }
+    this.showToast('Síntomas eliminados');
+    await this.cargarSintomas();
+    this.cargarRecientes();
   }
 
   async abrirModalArchivos() {

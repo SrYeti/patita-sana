@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PetSymptom } from '../../models/pet-symptom.model';
 
 @Component({
@@ -20,6 +21,11 @@ import { PetSymptom } from '../../models/pet-symptom.model';
       </ion-button>
       <ion-list>
         <ion-item *ngFor="let sintoma of sintomas">
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="seleccionados[sintoma.id]"
+            (ionChange)="onSeleccionChange()"
+          ></ion-checkbox>
           <ion-label>
             <strong>{{ sintoma.fecha_creacion | date: 'short' }}</strong><br />
             {{ sintoma.descripcion }}
@@ -33,13 +39,27 @@ import { PetSymptom } from '../../models/pet-symptom.model';
         <p>No hay síntomas registrados.</p>
       </ion-text>
     </ion-content>
+    <ion-footer *ngIf="idsSeleccionados.length > 0">
+      <ion-toolbar>
+        <ion-button expand="block" color="danger" (click)="eliminarSeleccionados()">
+          Eliminar ({{ idsSeleccionados.length }})
+        </ion-button>
+      </ion-toolbar>
+    </ion-footer>
   `,
   standalone: true,
-  imports: [IonicModule, CommonModule]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class SymptomListModalComponent {
   @Input() sintomas: PetSymptom[] = [];
   @Input() mascotaId: string = '';
+  @Output() eliminar = new EventEmitter<string[]>();
+
+  seleccionados: { [id: string]: boolean } = {};
+
+  get idsSeleccionados(): string[] {
+    return Object.keys(this.seleccionados).filter(id => this.seleccionados[id]);
+  }
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -49,5 +69,13 @@ export class SymptomListModalComponent {
 
   nuevoSintoma() {
     this.modalCtrl.dismiss('nuevo');
+  }
+
+  onSeleccionChange() {
+    // Solo refresca la vista
+  }
+
+  eliminarSeleccionados() {
+    this.modalCtrl.dismiss({ eliminar: this.idsSeleccionados });
   }
 }

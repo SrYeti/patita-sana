@@ -30,4 +30,12 @@ export class SymptomService {
     if (error) throw new Error(`Error al cargar síntomas: ${error.message}`);
     return data as PetSymptom[];
   }
+
+  async deleteSymptom(id: string) {
+    const { error } = await this.supabase.client
+      .from(this.tableName)
+      .delete()
+      .eq('id', id);
+    if (error) throw new Error(error.message);
+  }
 }
