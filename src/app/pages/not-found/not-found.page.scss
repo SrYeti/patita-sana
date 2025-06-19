@@ -1,24 +1,40 @@
 ion-content {
-  --background: #f8f8f0;
+  --background: #fff;
 }
 
 .texto {
-  color: #a4c084;
-  font-size: 20px;
+  color: var(--green-matcha-dark);
+  font-size: 22px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 24px;
+  font-family: 'century-gothic-paneuropean', sans-serif;
 }
 
 .ion-header {
-  --background: #a4c084 !important; /* o el color que quieras */
+  --background: var(--green-matcha);
+  --color: #fff;
+  font-weight: 600;
+  text-align: center;
+  font-size: 24px;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
 }
 
 .input-button {
-  background-color: #a4c084;
+  background-color: var(--green-matcha);
   --color: #fff;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 12px;
+  border-radius: 16px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  transition: transform 0.15s;
+}
+.input-button:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(164, 192, 132, 0.18);
 }
 
 .input-button-2 {
@@ -26,5 +42,7 @@ ion-content {
   --color: #fff;
   border-radius: 10px;
   padding: 10px 20px;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'century-gothic-paneuropean', sans-serif;
 }

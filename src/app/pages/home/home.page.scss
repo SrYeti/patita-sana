@@ -148,3 +148,110 @@ ion-header.header, .header {
 ion-content {
   --padding-top: 0 !important;
 }
+
+/* Slide menu estilos */
+.side-bar-header {
+  --background: var(--green-matcha-dark);
+  background: var(--green-matcha-dark);
+  color: #fff;
+  font-family: 'century-gothic-paneuropean', sans-serif;
+  box-shadow: 2px 0 12px rgba(164, 192, 132, 0.10);
+}
+
+ion-menu .header {
+  --background: var(--green-matcha-dark);
+  background: var(--green-matcha-dark) !important;
+  --color: #fff;
+  color: #fff !important;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-menu .header ion-title {
+  color: #fff !important;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  font-weight: 700;
+}
+
+ion-list.logout {
+  background: #fff !important;
+  box-shadow: none;
+  margin-top: 0;
+  padding-top: 24px;
+  border-radius: 0;
+}
+
+ion-item.logout {
+  --background: #fff !important;
+  --color: var(--text-dark) !important;
+  font-size: 18px;
+  border-radius: 10px;
+  margin: 8px 16px;
+  transition: background 0.2s;
+  box-shadow: none !important;
+}
+ion-item.logout.user {
+  border: 1px solid var(--green-matcha-light);
+  font-weight: 600;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+ion-item.logout:hover {
+  background: var(--green-matcha-light);
+  color: var(--green-matcha-dark);
+}
+
+ion-label.ion-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+  text-align: left;
+}
+
+ion-item.logout[button] {
+  --background: #fff !important;
+  --color: var(--text-dark) !important;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+  border: 1px solid var(--green-matcha-light);
+  box-shadow: none !important;
+  filter: none !important;
+}
+ion-item.logout[button]:hover {
+  --background: var(--green-matcha-light) !important;
+  --color: var(--green-matcha-dark) !important;
+}
+
+ion-menu .header + ion-content {
+  background: #fff !important;
+  border-radius: 0 !important;
+}
+
+body.menu-open {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+ion-menu {
+  --border-radius: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+ion-menu.menu-enabled {
+  overflow: hidden !important;
+  pointer-events: auto;
+}
