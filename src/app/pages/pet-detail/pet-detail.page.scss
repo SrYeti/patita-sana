@@ -142,7 +142,8 @@ ion-toolbar.header {
 .profile-operations {
   display: flex;
   gap: 10px; // Espacio entre botones
-  justify-content: center; // Centra los botones
+  align-items: left;
+  margin-bottom: 40px;
 }
 
 .profile-operations ion-button {
@@ -210,29 +211,43 @@ ion-toolbar.header {
   color: var(--green-matcha-dark);
 }
 
-.mascota-datos-cards {
+.mascota-datos-cards-scroll {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   gap: 16px;
-  margin: 24px 0 16px 0;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+  scrollbar-width: thin;
+  margin: 0 18px 18px 18px; // Firefox
 }
 .recientes-card {
   margin-top: 48px; // Puedes aumentar este valor para más separación
 }
 .dato-card {
-  width: 60px;
-  height: 80px;
+  flex: 0 0 100px;
+  width: 90px; // Más ancho para texto largo
   background: var(--matcha-latte-clear);
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.08);
-  min-width: 70px;
-  min-height: 90px;
-  padding: 12px 10px 8px 10px;
+  border-radius: 10px;
+  min-width: 90px;
+  max-width: 90px;
+  height: 110px; // Alto fijo
+  min-height: 110px;
+  max-height: 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+.dato-label,
+.dato-valor {
+  white-space: normal; // Permite salto de línea
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+  word-break: break-word;
 }
 
 .dato-card ion-icon {
@@ -241,17 +256,27 @@ ion-toolbar.header {
   margin-bottom: 4px;
 }
 
+.dato-svg {
+  font-size: 2rem;
+  color: #a4c084;
+  margin-bottom: 4px;
+}
+
 .dato-valor {
   font-family: "poppins", sans-serif;
-  font-size: 0.9rem;
+
   font-weight: 400;
   color: #7a9c5c;
   margin-bottom: 2px;
 }
 
 .dato-label {
-  font-size: 0.9rem;
   color: #888;
+}
+
+.dato-label,
+.dato-valor {
+  font-size: 0.65rem;
 }
 
 @media (max-width: 500px) {
@@ -287,6 +312,8 @@ ion-card.recientes-card,
   box-shadow: none !important;
   border: none !important;
   margin-top: 20px;
+  --border-width: 0 !important; // Quita el borde de Ionic
+  border-bottom: none !important; // Quita el borde nativo
 }
 
 .recientes-title {
@@ -301,6 +328,15 @@ ion-card.recientes-card,
   box-shadow: none !important;
   font-family: "poppins", sans-serif;
   // Usa la fuente Poppins
+  border-bottom: none !important;
+}
+
+.dato-svg {
+  width: 32px;
+  height: 32px;
+  color: var(--green-matcha-dark); // Cambia el color aquí
+  display: block;
+  margin: 0 auto 4px auto;
 }
 
 @font-face {

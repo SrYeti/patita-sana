@@ -24,6 +24,7 @@
   white-space: nowrap;
   font-weight: 500;
   position: static !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 ion-label[slot="floating"],
@@ -46,6 +47,22 @@ ion-label[slot="floating"],
   color: var(--green-matcha-dark) !important;
   --border-color: var(--green-matcha-dark) !important;
   box-shadow: 0 0 0 2px var(--green-matcha-light);
+}
+
+p {
+  font-family: "Poppins", sans-serif !important;
+  color: var(--text-dark);
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.register-link,
+.forgot-password {
+  font-family: "Poppins", sans-serif !important;
+  color: var(--text-dark);
+  font-size: 16px;
+  text-decoration: none;
 }
 
 .custom-input {
@@ -133,6 +150,8 @@ ion-label[slot="floating"],
   display: block;
   z-index: 2;
   border: none !important;
+  font-family: "Poppins", sans-serif !important;
+  text-transform: none !important;
 }
 
 ion-button.login-button::part(native) {
@@ -188,14 +207,22 @@ form::before {
 }
 @font-face {
   font-family: "UoqMunThenKhung";
-  src: url("/assets/fonts/UoqMunThenKhung-Regular.ttf") format("truetype");
+  src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/Poppins-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 .bienvenido-text {
-  font-family: "UoqMunThenKhung";
-  font-size: 30 rem;
-  color: #a4c084; // Un verde suave, puedes cambiarlo por rosa o lila si prefieres
+  font-family: "UoqMunThenKhung" !important;
+
+  font-size: 120px;
+  color: var(--green-matcha-dark);
   letter-spacing: 1.5px;
   text-align: center;
   margin-bottom: 18px;
