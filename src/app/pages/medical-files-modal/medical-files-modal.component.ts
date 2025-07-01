@@ -11,11 +11,34 @@ import { FormsModule } from '@angular/forms';
       <ion-toolbar>
         <ion-title>Archivos médicos</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="cerrar()">X</ion-button>
+          <ion-button (click)="cerrar()" fill="clear" class="cerrar-svg-btn">
+            <svg
+              class="icon-cerrar"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                opacity="0.5"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-
     <!-- Contenido principal: lista de archivos y acciones -->
     <ion-content class="ion-padding">
       <ion-button expand="block" (click)="subirDocumento()">
@@ -30,8 +53,9 @@ import { FormsModule } from '@angular/forms';
             (ionChange)="onSeleccionChange()"
           ></ion-checkbox>
           <ion-label>
-            <strong>{{ doc.nombre }}</strong><br />
-            <small>{{ doc.fecha_subida | date: 'short' }}</small>
+            <strong>{{ doc.nombre }}</strong
+            ><br />
+            <small>{{ doc.fecha_subida | date : 'short' }}</small>
           </ion-label>
           <ion-button fill="clear" (click)="verPDF(doc.file_path)">
             Ver PDF
@@ -47,7 +71,11 @@ import { FormsModule } from '@angular/forms';
     <!-- Pie de página: botón para eliminar archivos seleccionados -->
     <ion-footer *ngIf="idsSeleccionados.length > 0">
       <ion-toolbar>
-        <ion-button expand="block" color="danger" (click)="eliminarSeleccionados()">
+        <ion-button
+          expand="block"
+          color="danger"
+          (click)="eliminarSeleccionados()"
+        >
           Eliminar ({{ idsSeleccionados.length }})
         </ion-button>
       </ion-toolbar>
@@ -55,7 +83,7 @@ import { FormsModule } from '@angular/forms';
   `,
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
-  styleUrls: ['./medical-files-modal.component.scss']
+  styleUrls: ['./medical-files-modal.component.scss'],
 })
 export class MedicalFilesModalComponent {
   // Entradas y salidas del componente
@@ -67,7 +95,9 @@ export class MedicalFilesModalComponent {
 
   // Devuelve los IDs seleccionados
   get idsSeleccionados(): string[] {
-    return Object.keys(this.seleccionados).filter(id => this.seleccionados[id]);
+    return Object.keys(this.seleccionados).filter(
+      (id) => this.seleccionados[id]
+    );
   }
 
   constructor(private modalCtrl: ModalController) {}

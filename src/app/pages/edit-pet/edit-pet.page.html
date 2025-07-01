@@ -66,24 +66,25 @@
         <ion-label position="stacked" class="input-label">Foto</ion-label>
         <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
       </ion-item>
-
-      <!-- Botones de acción -->
-      <ion-button
-        expand="block"
-        type="submit"
-        class="guardar-button"
-        fill="clear"
-        >Guardar Cambios</ion-button
-      >
-      <ion-button
-        expand="block"
-        color="medium"
-        type="button"
-        (click)="cancelar()"
-        class="custom-button"
-        fill="clear"
-        >Cancelar</ion-button
-      >
+      <div class="acciones-group">
+        <!-- Botones de acción -->
+        <ion-button
+          expand="block"
+          type="submit"
+          class="guardar-button"
+          fill="clear"
+          >Guardar Cambios</ion-button
+        >
+        <ion-button
+          expand="block"
+          color="medium"
+          type="button"
+          (click)="cancelar()"
+          class="custom-button"
+          fill="clear"
+          >Cancelar</ion-button
+        >
+      </div>
     </form>
   </ion-content>
 </ion-content>

@@ -1,11 +1,14 @@
-@import url('https://fonts.cdnfonts.com/css/poppins');
+@import url("https://fonts.cdnfonts.com/css/poppins");
 
-ion-header, ion-toolbar, ion-title {
+ion-header,
+ion-toolbar,
+ion-title {
   --background: var(--gray-bg) !important;
   background: var(--gray-bg) !important;
   --color: var(--green-matcha-dark);
   color: var(--green-matcha-dark) !important;
-  font-family: 'poppins', sans-serif;
+  font-family: "UoqMunThenKhung", sans-serif !important;
+  font-size: 30px;
   box-shadow: none;
 }
 
@@ -26,7 +29,7 @@ ion-header {
 
 ion-toolbar::before,
 ion-toolbar::after {
-  content: '' !important;
+  content: "" !important;
   display: block !important;
   position: absolute !important;
   top: 0;
@@ -45,7 +48,7 @@ ion-toolbar::after {
 ion-content {
   --background: var(--gray-bg) !important;
   background: var(--gray-bg) !important;
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   padding-top: 0 !important;
 }
 
@@ -53,7 +56,7 @@ ion-button {
   --background: var(--green-matcha);
   --color: #fff;
   border-radius: 10px;
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   text-transform: none;
   font-size: 16px;
   box-shadow: none;
@@ -61,8 +64,10 @@ ion-button {
   margin-top: 0 !important;
 }
 
-ion-list, ion-item, ion-label {
-  font-family: 'poppins', sans-serif;
+ion-list,
+ion-item,
+ion-label {
+  font-family: "poppins", sans-serif;
   color: var(--text-dark);
 }
 
@@ -92,7 +97,7 @@ ion-footer ion-button[color="danger"] {
   --color: #fff;
   border-radius: 10px;
   font-size: 14px;
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   margin-top: 8px;
 }
 
@@ -108,12 +113,12 @@ ion-item {
   border-radius: 12px;
   margin-bottom: 12px;
   box-shadow: 0 2px 8px rgba(164, 192, 132, 0.08);
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   color: var(--green-matcha-dark) !important;
 }
 
 ion-label {
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   color: var(--green-matcha-dark) !important;
   font-size: 1rem;
 }
@@ -126,4 +131,11 @@ ion-label strong {
 ion-label small {
   color: #888;
   font-size: 0.85rem;
+}
+
+@font-face {
+  font-family: "UoqMunThenKhung";
+  src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

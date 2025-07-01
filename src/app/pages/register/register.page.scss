@@ -64,6 +64,16 @@ ion-input {
   outline: none;
 }
 
+.registro-button {
+  --background: var(--green-matcha-dark);
+  --color: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 24px;
+  text-transform: none;
+}
+
 @font-face {
   font-family: "UoqMunThenKhung";
   src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
