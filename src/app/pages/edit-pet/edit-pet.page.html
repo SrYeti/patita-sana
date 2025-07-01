@@ -1,15 +1,14 @@
 <!-- Encabezado de la página de edición -->
 <ion-content>
-  <ion-header fill="clear">
-    <ion-toolbar class="ion-header">
-      <ion-title class="ion-header">Editar Mascota</ion-title>
+  <ion-header fill="clear" class="header" translucent="true">
+    <ion-toolbar class="header">
+      <ion-title class="header">Editar Mascota</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <!-- Formulario de edición de mascota -->
   <ion-content class="ion-padding" class="formulario" fill="clear">
     <form *ngIf="mascota" (ngSubmit)="guardarCambios()">
-
       <!-- Campo: Nombre -->
       <ion-item class="input-item">
         <ion-label position="floating" class="input-label">Nombre</ion-label>
@@ -85,7 +84,6 @@
         fill="clear"
         >Cancelar</ion-button
       >
-
     </form>
   </ion-content>
 </ion-content>

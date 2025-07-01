@@ -1,36 +1,79 @@
 ion-content {
-  --background: #f8f8f0 !important; /* o el color que quieras */
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
 }
 
-.ion-header {
-  --background: #a4c084 !important; /* o el color que quieras */
+ion-header.header,
+.header,
+ion-toolbar.header {
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+  --color: var(--green-matcha-dark);
+  color: var(--green-matcha-dark) !important;
+  box-shadow: none;
+  font-family: uoqmunthenkhung, sans-serif !important;
+  font-size: 40px;
 }
 
-.registro-button {
-  background-color: #a4c084;
-  --color: #fff;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 12px;
+form {
+  width: 100%;
+  max-width: 400px;
+  margin: 32px auto 0 auto;
+  padding: 24px 18px 32px 18px;
+  background: var(--gray-bg);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(164, 192, 132, 0.08);
 }
 
-.custom-input {
-  --backgrond: #f8f8f8;
-}
-
-.input-item {
+ion-item {
+  flex-direction: column;
+  align-items: flex-start;
+  --highlight-color-focused: transparent; // Quita la línea de foco
+  --border-color: transparent;
   --background: transparent;
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  --border-color: #a4c084;
-  --highlight-color-focused: #a4c084;
-  margin-bottom: 20px;
-  overflow: visible; /* Esto es clave para que el label no se corte */
+  border-radius: 14px;
+  margin-bottom: 18px;
+  box-shadow: none;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
 }
-.input-label {
-  color: #666666 !important;
-  font-size: 14px !important;
-  margin-bottom: 5px;
-  transform-origin: left top !important;
-  white-space: nowrap;
+
+ion-label {
+  font-family: "Poppins", sans-serif !important;
+  text-transform: none !important;
+  margin-bottom: 8px; // Más espacio debajo del label
+  color: var(--green-matcha-dark) !important;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+ion-input {
+  margin-top: 30px;
+  padding: 10px 12px;
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--green-matcha-dark);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 1rem;
+  padding: 10px 12px;
+  box-shadow: none;
+  outline: none;
+}
+
+@font-face {
+  font-family: "UoqMunThenKhung";
+  src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

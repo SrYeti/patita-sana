@@ -1,5 +1,54 @@
 @import url("https://fonts.cdnfonts.com/css/century-gothic-paneuropean");
 
+ion-header.header,
+.header,
+ion-toolbar.header {
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+  --color: var(--green-matcha-dark);
+  color: var(--green-matcha-dark) !important;
+  box-shadow: none;
+}
+
+ion-menu,
+ion-menu ion-content,
+ion-menu ion-list,
+ion-menu ion-item,
+ion-menu .logout.user,
+ion-menu .logout {
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+  color: var(--green-matcha-dark) !important;
+}
+
+.menu-title {
+  font-family: "poppins", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+ion-menu ion-label,
+ion-menu h2 {
+  font-family: "poppins", sans-serif;
+  font-size: 20px;
+  color: var(--green-matcha-dark) !important;
+}
+
+ion-content {
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+}
+
+.titulo-home {
+  font-family: "UoqMunThenKhung";
+  text-align: left;
+  padding: 15px;
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--green-matcha-dark);
+  margin-bottom: 16px;
+}
+
 .home-container {
   min-height: 100vh;
   display: flex;
@@ -13,245 +62,96 @@
   padding-top: calc(100vh - 33vh);
 }
 
-ion-header.header, .header {
-  --background: var(--green-matcha);
-  --color: #fff;
-  font-weight: 600;
-  text-align: center;
-  font-size: 24px;
-  font-family: 'century-gothic-paneuropean', sans-serif;
-  border-radius: 0;
-  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
-  margin-top: 0 !important;
-  top: 0 !important;
-  position: sticky;
-  z-index: 10;
+.add-mascota-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-ion-toolbar.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-ion-buttons[slot="start"] {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  z-index: 2;
-}
-
-ion-title.header {
-  flex: 1 1 auto;
-  text-align: center;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-ion-content {
-  --background: transparent !important;
-  background: transparent !important;
-  --padding-top: 0 !important;
-}
-
-.ion-card {
-  --background: var(--green-matcha-light);
-  --color: var(--text-dark);
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+  justify-content: flex-end;
   margin-bottom: 18px;
-  transition: transform 0.15s;
-}
-.ion-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 6px 18px rgba(164, 192, 132, 0.18);
 }
 
-ion-card-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--green-matcha-dark);
-}
-ion-card-subtitle {
-  font-size: 0.95rem;
-  color: var(--text-light);
-}
-
-ion-card.add-pet {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 160px;
-  background: var(--green-matcha);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border: 2px dashed var(--green-matcha-dark);
-  cursor: pointer;
-  transition: background 0.2s, border 0.2s;
-}
-ion-card.add-pet:hover {
-  background: var(--green-matcha-dark);
-  border-color: var(--green-matcha);
-}
-
-img[alt=""] {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  margin: 0;
-  display: block;
-  box-shadow: none;
-  border: none;
-  clip-path: inset(0 0 16.66% 0);
-  position: relative;
-  top: 0;
-}
-
-.home-container {
-  position: relative;
-  z-index: 2;
-}
-
-ion-header.header, .header {
+.add-mascota-btn {
   --background: var(--green-matcha);
   --color: #fff;
-  font-weight: 600;
-  text-align: center;
-  font-size: 24px;
-  font-family: 'century-gothic-paneuropean', sans-serif;
-  border-radius: 0;
-  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
-  margin-top: 0 !important;
-  top: 0 !important;
-  position: sticky;
-  z-index: 10;
+  height: 5px;
+  font-weight: 400;
+  font-family: "poppins";
+  border-radius: 20px;
+  font-size: 10px;
+  box-shadow: none !important;
+  --box-shadow: none !important;
+  text-transform: none !important;
+  font-variant: normal;
 }
 
-.main-content-grid {
-  margin-top: -24px !important;
+.mascotas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
 }
 
-ion-content {
-  --padding-top: 0 !important;
-}
-
-/* Slide menu estilos */
-.side-bar-header {
-  --background: var(--green-matcha-dark);
-  background: var(--green-matcha-dark);
-  color: #fff;
-  font-family: 'century-gothic-paneuropean', sans-serif;
-  box-shadow: 2px 0 12px rgba(164, 192, 132, 0.10);
-}
-
-ion-menu .header {
-  --background: var(--green-matcha-dark);
-  background: var(--green-matcha-dark) !important;
-  --color: #fff;
-  color: #fff !important;
-  font-size: 22px;
-  font-weight: 700;
-  text-align: center;
-  border-radius: 0;
-  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.10);
+.mascota-card {
+  position: relative;
   display: flex;
   align-items: center;
+  background: var(--matcha-latte-clear);
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.08);
+  padding: 18px 24px 18px 60px; // Padding izquierdo para dejar espacio a la imagen
+  min-height: 80px;
+  min-width: 220px;
+  max-width: 320px; // Tarjeta más corta de largo
+  margin-left: 40px; // Para que la imagen sobresalga a la izquierda
+  transition: box-shadow 0.15s, transform 0.12s;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 6px 18px rgba(164, 192, 132, 0.18);
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+.mascota-foto-circular {
+  position: absolute;
+  left: -40px; // Hace que sobresalga a la izquierda
+  top: 50%;
+  transform: translateY(-50%);
+  width: 120px; // Más grande
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.12);
+}
+
+.mascota-info {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  margin-left: 50px; // Espacio entre la imagen y el texto
 }
 
-ion-menu .header ion-title {
-  color: #fff !important;
-  text-align: center;
-  width: 100%;
-  margin: 0 auto;
+.mascota-nombre {
+  font-size: 30px;
+  font-family: "UoqMunThenKhung";
   font-weight: 700;
-}
-
-ion-list.logout {
-  background: #fff !important;
-  box-shadow: none;
-  margin-top: 0;
-  padding-top: 24px;
-  border-radius: 0;
-}
-
-ion-item.logout {
-  --background: #fff !important;
-  --color: var(--text-dark) !important;
-  font-size: 18px;
-  border-radius: 10px;
-  margin: 8px 16px;
-  transition: background 0.2s;
-  box-shadow: none !important;
-}
-ion-item.logout.user {
-  border: 1px solid var(--green-matcha-light);
-  font-weight: 600;
-  margin-bottom: 12px;
-  pointer-events: none;
-}
-ion-item.logout:hover {
-  background: var(--green-matcha-light);
   color: var(--green-matcha-dark);
+  margin-bottom: 4px;
 }
 
-ion-label.ion-card h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+.mascota-edad {
+  font-size: 1rem;
   color: var(--text-dark);
-  margin: 0;
-  text-align: left;
 }
 
-ion-item.logout[button] {
-  --background: #fff !important;
-  --color: var(--text-dark) !important;
-  font-weight: 600;
-  border-radius: 10px;
-  margin-top: 16px;
-  margin-bottom: 8px;
-  transition: background 0.2s;
-  border: 1px solid var(--green-matcha-light);
-  box-shadow: none !important;
-  filter: none !important;
-}
-ion-item.logout[button]:hover {
-  --background: var(--green-matcha-light) !important;
-  --color: var(--green-matcha-dark) !important;
+@font-face {
+  font-family: "UoqMunThenKhung";
+  src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-ion-menu .header + ion-content {
-  background: #fff !important;
-  border-radius: 0 !important;
-}
-
-body.menu-open {
-  overflow: hidden !important;
-  touch-action: none !important;
-}
-
-ion-menu {
-  --border-radius: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  pointer-events: none;
-}
-
-ion-menu.menu-enabled {
-  overflow: hidden !important;
-  pointer-events: auto;
+@font-face {
+  font-family: "poppins";
+  src: url("/assets/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

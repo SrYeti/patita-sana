@@ -3,7 +3,7 @@
     <div class="login-banner">
       <img src="assets/perrio.jpg" alt="Login Banner" />
       <div class="login-text">
-        <h1>Bienvenido!</h1>
+        <h1 class="bienvenido-text">Bienvenido!</h1>
         <p>Inicia sesión para continuar</p>
       </div>
     </div>
@@ -20,7 +20,9 @@
         ></ion-input>
       </ion-item>
       <ion-item class="input-item">
-        <ion-label position="floating" class="input-label">Contraseña</ion-label>
+        <ion-label position="floating" class="input-label"
+          >Contraseña</ion-label
+        >
         <ion-input
           type="password"
           [(ngModel)]="password"
@@ -30,7 +32,12 @@
         ></ion-input>
       </ion-item>
 
-      <ion-button class="login-button" expand="block" fill="solid" type="submit">
+      <ion-button
+        class="login-button"
+        expand="block"
+        fill="solid"
+        type="submit"
+      >
         Entrar
       </ion-button>
     </form>

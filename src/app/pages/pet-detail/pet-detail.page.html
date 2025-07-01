@@ -1,12 +1,19 @@
 <!-- Encabezado de la página de detalle de mascota -->
 <ion-header class="header">
   <ion-toolbar class="header">
-    <ion-title>Detalle de Mascota</ion-title>
+    <ion-buttons
+      (click)="volverAHome()"
+      class="volver-button"
+      fill="clear"
+      slot="start"
+    >
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <!-- Foto de perfil redonda -->
+<ion-content>
+  <!-- foto de perfil de la mascota -->
   <div class="mascota-foto-container" *ngIf="mascota?.fotoUrl">
     <img
       [src]="mascota?.fotoUrl"
@@ -15,18 +22,9 @@
     />
   </div>
 
-  <!-- Nombre de la mascota -->
-  <h2 class="mascota-nombre">{{ (mascota?.nombre || '') |capitalize }}</h2>
-
   <div class="profile-operations">
-    <ion-button
-      expand="block"
-      fill="clear"
-      (click)="volverAHome()"
-      class="volver-button"
-    >
-      Volver
-    </ion-button>
+    <!-- Nombre de la mascota -->
+    <h2 class="mascota-nombre">{{ (mascota?.nombre || '') |capitalize }}</h2>
     <!-- Botón para editar datos de la mascota -->
     <ion-button
       expand="block"
@@ -34,29 +32,35 @@
       fill="clear"
       class="editar-button"
     >
-      Editar datos
+      Editar
     </ion-button>
   </div>
 
-  <!-- Datos en tabla -->
-  <table class="mascota-datos" *ngIf="mascota">
-    <tr>
-      <td>Edad:</td>
-      <td>{{ calcularEdad(mascota.fechaNacimiento) }}</td>
-    </tr>
-    <tr>
-      <td>Sexo:</td>
-      <td>{{ mascota.sexo }}</td>
-    </tr>
-    <tr>
-      <td>Peso:</td>
-      <td>{{ mascota.peso }} kg</td>
-    </tr>
-    <tr>
-      <td>N° ficha:</td>
-      <td>{{ mascota.fichaNumero }}</td>
-    </tr>
-  </table>
+  <!-- Datos en cards -->
+  <div class="mascota-datos-cards">
+    <div class="dato-card">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <div class="dato-label">Edad</div>
+      <div class="dato-valor">
+        {{ calcularEdad(mascota?.fechaNacimiento || '') }}
+      </div>
+    </div>
+    <div class="dato-card">
+      <ion-icon name="male-female-outline"></ion-icon>
+      <div class="dato-label">Sexo</div>
+      <div class="dato-valor">{{ mascota?.sexo }}</div>
+    </div>
+    <div class="dato-card">
+      <ion-icon name="barbell-outline"></ion-icon>
+      <div class="dato-label">Peso</div>
+      <div class="dato-valor">{{ mascota?.peso }} kg</div>
+    </div>
+    <div class="dato-card">
+      <ion-icon name="document-outline"></ion-icon>
+      <div class="dato-label">Ficha</div>
+      <div class="dato-valor">{{ mascota?.fichaNumero }}</div>
+    </div>
+  </div>
 
   <!-- Acciones: Archivos médicos y Síntomas -->
   <div class="pet-detail-actions ion-margin-bottom">
@@ -79,9 +83,9 @@
   </div>
 
   <!-- Sección de elementos recientes -->
-  <ion-card>
+  <ion-card class="recientes-card">
     <ion-card-header>
-      <ion-card-title>Recientes</ion-card-title>
+      <ion-card-title class="recientes-title">Recientes</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
@@ -112,14 +116,16 @@
   </ion-card>
 
   <!-- Botón para eliminar la mascota -->
-  <ion-button
-    expand="block"
-    fill="clear"
-    class="eliminar-button"
-    (click)="confirmarEliminarMascota()"
-  >
-    Eliminar mascota
-  </ion-button>
+  <div class="eliminar-container">
+    <ion-button
+      expand="block"
+      fill="clear"
+      class="eliminar-button"
+      (click)="confirmarEliminarMascota()"
+    >
+      Eliminar mascota
+    </ion-button>
+  </div>
 
   <!-- Input oculto para seleccionar PDF -->
   <input

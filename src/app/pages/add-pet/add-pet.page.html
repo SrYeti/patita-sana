@@ -1,24 +1,32 @@
 <!-- Encabezado de la página -->
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Añadir Mascota</ion-title>
+<ion-header class="header" translucent="true" fill="clear">
+  <ion-toolbar class="header">
+    <ion-title class="header">Añade tu mascota</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <!-- Formulario para añadir mascota -->
 <ion-content class="ion-padding">
   <form (ngSubmit)="onAddPet()">
-
     <!-- Campo: Nombre -->
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="nombre" name="nombre" required></ion-input>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+      ></ion-input>
     </ion-item>
 
     <!-- Campo: Número de Ficha -->
     <ion-item>
-      <ion-label position="floating">Número de Ficha</ion-label>
-      <ion-input type="text" [(ngModel)]="fichaNumero" name="fichaNumero"></ion-input>
+      <ion-label position="stacked">Número de Ficha</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="fichaNumero"
+        name="fichaNumero"
+      ></ion-input>
     </ion-item>
 
     <!-- Campo: Fecha de nacimiento -->
@@ -28,13 +36,14 @@
         presentation="date"
         [(ngModel)]="fechaNacimiento"
         name="fechaNacimiento"
-        required>
+        required
+      >
       </ion-datetime>
     </ion-item>
 
     <!-- Campo: Sexo -->
     <ion-item>
-      <ion-label position="floating">Sexo</ion-label>
+      <ion-label position="stacked">Sexo</ion-label>
       <ion-select [(ngModel)]="sexo" name="sexo" required>
         <ion-select-option value="Macho">Macho</ion-select-option>
         <ion-select-option value="Hembra">Hembra</ion-select-option>
@@ -43,7 +52,7 @@
 
     <!-- Campo: Peso -->
     <ion-item>
-      <ion-label position="floating">Peso (kg)</ion-label>
+      <ion-label position="stacked">Peso (kg)</ion-label>
       <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
     </ion-item>
 
@@ -54,8 +63,18 @@
     </ion-item>
 
     <!-- Botones de acción -->
-    <ion-button expand="block" type="submit">Guardar Mascota</ion-button>
-    <ion-button expand="block" color="medium" type="button" (click)="cancelar()">Cancelar</ion-button>
-
+    <div class="acciones-group">
+      <ion-button
+        expand="block"
+        color="medium"
+        type="button"
+        (click)="cancelar()"
+        class="cancelar-btn"
+        >Cancelar</ion-button
+      >
+      <ion-button expand="block" type="submit" class="guardar-btn"
+        >Guardar Mascota</ion-button
+      >
+    </div>
   </form>
 </ion-content>

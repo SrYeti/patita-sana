@@ -100,7 +100,7 @@ ion-label[slot="floating"],
 .login-text {
   color: var(--green-matcha-dark);
   text-align: center;
-  font-family: 'century-gothic-paneuropean', sans-serif;
+  font-family: "century-gothic-paneuropean", sans-serif;
 }
 
 .login-text h1 {
@@ -120,7 +120,8 @@ ion-label[slot="floating"],
   --background: var(--green-matcha) !important;
   --color: #fff !important;
   border-radius: 10px;
-  padding: 18px 0;
+  height: 34px;
+  padding: 0 18px;
   font-size: 18px;
   margin-top: 24px;
   margin-left: 0;
@@ -128,7 +129,7 @@ ion-label[slot="floating"],
   width: 100%;
   max-width: 350px;
   box-shadow: none !important;
-  font-weight: 600;
+  font-weight: 400;
   display: block;
   z-index: 2;
   border: none !important;
@@ -184,4 +185,19 @@ form::before {
 }
 .register-link a:hover {
   color: var(--green-matcha-dark);
+}
+@font-face {
+  font-family: "UoqMunThenKhung";
+  src: url("/assets/fonts/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.bienvenido-text {
+  font-family: "UoqMunThenKhung";
+  font-size: 30 rem;
+  color: #a4c084; // Un verde suave, puedes cambiarlo por rosa o lila si prefieres
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 18px;
+  text-shadow: 0 2px 8px rgba(164, 192, 132, 0.1);
 }

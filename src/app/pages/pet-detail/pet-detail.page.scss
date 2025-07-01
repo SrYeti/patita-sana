@@ -9,17 +9,27 @@ ion-content {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.eliminar-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
 .eliminar-button {
+  font-family: "poppins", sans-serif;
+  text-transform: none !important;
   --background: #bfaf36;
   --color: #fff;
   border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 15px;
-
-  margin-left: 25px;
-  margin-right: 25px;
-  text-transform: none !important;
-  font-family: inherit; // Opcional: usa la fuente heredada
+  font-size: 8px; // Más pequeño
+  padding: 4px 12px; // Menos padding
+  height: 28px; // Menor altura
+  min-width: unset;
+  margin: 0;
+  box-shadow: none;
+  margin-top: 30px;
+  margin-right: 30px;
 }
 
 .texto-archivos {
@@ -42,13 +52,18 @@ ion-content {
   font-family: inherit; // Opcional: usa la fuente heredada
 }
 
-.header {
-  --background: #a4c084;
-  --color: #fff;
-  font-weight: light;
-  text-align: center;
-  font-size: 24px;
-  font-family: "century-gothic-paneuropean", sans-serif;
+ion-header.header,
+.header,
+ion-toolbar.header {
+  --background: rgba(255, 255, 255, 0.7) !important; // Blanco/beige translúcido
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(6px); // Opcional: desenfoque
+  box-shadow: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 10;
 }
 
 .sintomas-button {
@@ -100,12 +115,12 @@ ion-content {
 
 .sintomas-button {
   text-transform: none !important;
-  font-family: inherit; // Opcional: usa la fuente heredada
+  font-family: "poppins", sans-serif; // Usa la fuente Poppins
   background: #a4c084;
   --color: #fff !important;
-  border: 3px solid #fff;
-  font-size: 10px;
-  height: 28px; // Ajusta la altura del botón
+  border: 2px solid #fff;
+  font-size: 15px;
+  height: 30px; // Ajusta la altura del botón
   padding: 0 12px; // Ajusta el padding horizontal
   align-items: center; // Centra el texto verticalmente
   justify-content: center;
@@ -113,12 +128,12 @@ ion-content {
 
 .archivos-button {
   text-transform: none !important;
-  font-family: inherit; // Opcional: usa la fuente heredada
-  background: #fff;
+  font-family: "poppins", sans-serif; // Usa la fuente Poppins
+  background: var(--gray-bg);
   --color: #a4c084;
-  border: 3px solid #a4c084;
-  font-size: 10px;
-  height: 28px; // Ajusta la altura del botón
+  border: 2px solid #a4c084;
+  font-size: 15px;
+  height: 30px; // Ajusta la altura del botón
   padding: 0 12px; // Ajusta el padding horizontal
   align-items: center; // Centra el texto verticalmente
   justify-content: center;
@@ -136,97 +151,107 @@ ion-content {
 }
 
 .volver-button {
-  --background: #a4c084;
-  --color: #fff;
+  --background: rgba(255, 255, 255, 0.7) !important; // Blanco/beige translúcido
+  background: rgba(255, 255, 255, 0.7) !important;
+  --color: #778a61; // Verde oscuro para el texto
+  color: #778a61 !important;
+  font-weight: 600;
   border-radius: 10px;
-
-  font-size: 16px;
-  margin-top: 20px;
-  margin-left: 25px;
-  margin-right: 25px;
+  font-size: 9px;
   text-transform: none !important;
-  font-family: inherit; // Opcional: usa la fuente heredada
-  font-size: 12px;
-  height: 28px; // Ajusta la altura del botón
-  padding: 0 12px; // Ajusta el padding horizontal
-  align-items: center; // Centra el texto verticalmente
-  justify-content: center;
+  font-family: inherit;
+  box-shadow: none;
+  padding: 0 16px;
+  height: 32px;
+  display: left;
+  gap: 6px;
 }
 
 .editar-button {
-  --background: #fff;
+  --background: var(--gray-bg);
   --color: #a4c084;
   border-radius: 10px;
   border-width: 5px;
   border-color: #a4c084;
-  font-size: 16px;
-  margin-top: 20px;
-  margin-left: 25px;
-  margin-right: 25px;
   font-size: 12px;
-  text-transform: none !important;
-  font-family: inherit; // Opcional: usa la fuente heredada
-  height: 28px; // Ajusta la altura del botón
+  margin-top: 20px;
   padding: 0 12px; // Ajusta el padding horizontal
   align-items: center; // Centra el texto verticalmente
   justify-content: center;
+  font-family: "poppins", sans-serif; // Usa la fuente Poppins
+  text-transform: none !important;
+  font-variant: normal;
 }
 
 .mascota-foto-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
 .mascota-foto {
-  width: 190px;
-  height: 190px;
+  width: 100vw; // Ocupa todo el ancho de la ventana
+  max-width: 100vw; // Evita desbordes
+  height: 100vw; // Hace la imagen cuadrada
+  max-height: 60vh; // Opcional: limita la altura en pantallas grandes
   object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #a4c084;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 0; // Sin bordes redondeados
+  border: none; // Sin borde
+  margin: 0;
+  display: block;
+  box-shadow: none;
 }
 
 .mascota-nombre {
-  text-align: center;
+  font-family: "UoqMunThenKhung", sans-serif;
+  margin-left: 20px;
   margin-bottom: 10px;
-  font-size: 30px;
-  color: #4a4a4a;
+  font-size: 40px;
+  color: var(--green-matcha-dark);
 }
 
-.mascota-datos {
-  margin: 24px auto 16px auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  min-width: 220px;
-  max-width: 320px;
-  background: #fff;
+.mascota-datos-cards {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0 16px 0;
+  flex-wrap: wrap;
+}
+.recientes-card {
+  margin-top: 48px; // Puedes aumentar este valor para más separación
+}
+.dato-card {
+  width: 60px;
+  height: 80px;
+  background: var(--matcha-latte-clear);
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(164, 192, 132, 0.1);
-  overflow: hidden;
-  font-size: 1.08rem;
-  color: #4a4a4a;
+  box-shadow: 0 2px 8px rgba(164, 192, 132, 0.08);
+  min-width: 70px;
+  min-height: 90px;
+  padding: 12px 10px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.mascota-datos td {
-  padding: 14px 22px;
-  border-bottom: 1px solid #e8f0e5;
+.dato-card ion-icon {
+  font-size: 2rem;
+  color: #a4c084;
+  margin-bottom: 4px;
 }
 
-.mascota-datos tr:last-child td {
-  border-bottom: none;
-}
-
-.mascota-datos td:first-child {
-  font-weight: 600;
+.dato-valor {
+  font-family: "poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
   color: #7a9c5c;
-  background: #f6fbf3;
-  width: 40%;
+  margin-bottom: 2px;
 }
 
-.mascota-datos td:last-child {
-  text-align: right;
-  color: #4a4a4a;
+.dato-label {
+  font-size: 0.9rem;
+  color: #888;
 }
 
 @media (max-width: 500px) {
@@ -237,4 +262,57 @@ ion-content {
   .mascota-datos td {
     padding: 10px 8px;
   }
+}
+
+ion-card.recientes-card,
+.recientes-card ion-card-header,
+.recientes-card ion-card-content,
+.recientes-card ion-list,
+.recientes-card ion-label,
+.recientes-card strong,
+.recientes-card small,
+.recientes-card p,
+.recientes-card ion-button,
+.recientes-card ion-text {
+  background: var(--matcha-latte-clear) !important;
+  font-family: "poppins", sans-serif; // Usa la fuente Poppins
+  text-transform: none !important;
+  color: var(--green-matcha-dark) !important;
+}
+
+// Elimina el fondo y bordes de los ion-item internos
+.recientes-card ion-item {
+  --background: var(--matcha-latte-clear) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-top: 20px;
+}
+
+.recientes-title {
+  font-family: "uoqmunthenkhung", sans-serif;
+  --color: var(--green-matcha-dark);
+}
+
+// Asegura que la parte nativa de ion-item también sea blanca
+.recientes-card ion-item::part(native) {
+  background: var(--matcha-latte-clear) !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-family: "poppins", sans-serif;
+  // Usa la fuente Poppins
+}
+
+@font-face {
+  font-family: "UoqMunThenKhung";
+  src: url("/assets/UoqMunThenKhung-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "poppins";
+  src: url("/assets/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
