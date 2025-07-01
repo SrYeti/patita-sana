@@ -108,7 +108,7 @@ export class SymptomFormPage implements OnInit {
       };
 
       try {
-        //await this.symptomService.addSymptom(symptomData);
+        await this.symptomService.addSymptom(symptomData);
         await this.presentToast('Registro guardado exitosamente');
 
         this.router.navigate(['/pet-detail', this.currentPetId]);
