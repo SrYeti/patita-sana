@@ -94,7 +94,7 @@ export class PetDetailPage implements OnInit {
       tipo: 'documento',
       nombre: doc.nombre,
       fecha: new Date(doc.fecha_subida),
-      file_path: doc.file_path // Usar file_path
+      url: doc.url // Usar url
     }));
 
     const sintomas = this.sintomas.map(sintoma => ({
@@ -188,22 +188,25 @@ export class PetDetailPage implements OnInit {
       .upload(filePath, file);
 
     if (uploadError) {
-      this.showToast('Error al subir el PDF');
+      this.showToast('Error al subir el PDF: ' + (uploadError.message || JSON.stringify(uploadError)));
+      console.error('Supabase upload error:', uploadError);
       return;
     }
 
-    // NO guardes el signed URL, solo el file_path
+    // NO guardes el signed URL, solo el url
     const { error: insertError } = await supabase
       .from('documentos')
       .insert([{
         mascota_id: mascotaId,
         user_id: userId,
         nombre: nombreUsuario + '.pdf',
-        file_path: filePath // <-- SOLO esto
+        url: filePath, // Cambiado a 'url'
+        fecha_subida: new Date().toISOString() // Agregado campo fecha_subida
       }]);
 
     if (insertError) {
-      this.showToast('Error al guardar el documento');
+      this.showToast('Error al guardar el documento: ' + (insertError.message || JSON.stringify(insertError)));
+      console.error('Supabase insert error:', insertError);
       return;
     }
 
@@ -230,7 +233,7 @@ export class PetDetailPage implements OnInit {
   async eliminarSeleccionados(ids: string[]) {
     const docsAEliminar = this.documentos.filter(doc => ids.includes(doc.id));
     for (const doc of docsAEliminar) {
-      const path = doc.file_path;
+      const path = doc.url; // Usar url
       if (path) {
         await supabase.storage.from('documentos-mascotas').remove([path]);
       }
@@ -309,7 +312,7 @@ export class PetDetailPage implements OnInit {
 
     if (docs && docs.length > 0) {
       for (const doc of docs) {
-        const path = doc.file_path;
+        const path = doc.url; // Usar url
         if (path) {
           await supabase.storage.from('documentos-mascotas').remove([path]);
         }

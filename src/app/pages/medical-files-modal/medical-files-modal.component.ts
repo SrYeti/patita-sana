@@ -54,7 +54,8 @@ import { FormsModule } from '@angular/forms';
     </ion-footer>
   `,
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  styleUrls: ['./medical-files-modal.component.scss']
 })
 export class MedicalFilesModalComponent {
   // Entradas y salidas del componente

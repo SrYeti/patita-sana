@@ -19,14 +19,14 @@ import { PetSymptom } from '../../models/pet-symptom.model';
       <ion-button expand="block" (click)="nuevoSintoma()">
         Nuevo síntoma
       </ion-button>
-      <ion-list>
-        <ion-item *ngFor="let sintoma of sintomas">
+      <ion-list class="sintomas-lista-modal">
+        <ion-item *ngFor="let sintoma of sintomas" class="sintoma-item-modal">
           <ion-checkbox
             slot="start"
             [(ngModel)]="seleccionados[sintoma.id]"
             (ionChange)="onSeleccionChange()"
           ></ion-checkbox>
-          <ion-label>
+          <ion-label class="sintoma-label-modal">
             <strong>{{ sintoma.fecha_creacion | date: 'short' }}</strong><br />
             {{ sintoma.descripcion }}
             <div *ngIf="sintoma.notas">
@@ -47,6 +47,7 @@ import { PetSymptom } from '../../models/pet-symptom.model';
       </ion-toolbar>
     </ion-footer>
   `,
+  styleUrls: ['./symptom-list-modal.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
