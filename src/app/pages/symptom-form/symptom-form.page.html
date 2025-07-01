@@ -61,25 +61,29 @@
         placeholder="Otra información relevante..."
       ></ion-textarea>
     </ion-item>
+    <div class="acciones-group">
+      <!-- Botón: Guardar Registro -->
+      <ion-button
+        type="submit"
+        expand="block"
+        [disabled]="!symptomForm.valid"
+        class="ion-margin-top guardar-btn"
+        fill="clear"
+      >
+        Guardar Registro
+      </ion-button>
 
-    <!-- Botón: Guardar Registro -->
-    <ion-button
-      type="submit"
-      expand="block"
-      [disabled]="!symptomForm.valid"
-      class="ion-margin-top"
-    >
-      Guardar Registro
-    </ion-button>
-
-    <!-- Botón: Cancelar -->
-    <ion-button
-      expand="block"
-      color="medium"
-      type="button"
-      (click)="volverAPetDetail()"
-    >
-      Cancelar
-    </ion-button>
+      <!-- Botón: Cancelar -->
+      <ion-button
+        expand="block"
+        color="medium"
+        type="button"
+        fill="clear"
+        (click)="volverAPetDetail()"
+        class="cancelar-btn"
+      >
+        Cancelar
+      </ion-button>
+    </div>
   </form>
 </ion-content>

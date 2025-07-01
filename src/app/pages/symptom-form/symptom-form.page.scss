@@ -48,6 +48,7 @@ ion-label {
   font-size: 1rem;
 }
 
+ion-textarea,
 ion-input,
 ion-select,
 ion-datetime {
@@ -60,6 +61,27 @@ ion-datetime {
   border-radius: 12px;
   background: #fff;
   color: var(--text-dark);
+  font-size: 1rem;
+  padding: 10px 12px;
+  box-shadow: none;
+  outline: none;
+}
+
+ion-list ion-item ion-label,
+ion-list {
+  color: var(--gray-bg) !important;
+  background: var(--green-matcha);
+  border-radius: 12px;
+  box-shadow: none;
+  outline: none;
+}
+
+ion-list {
+  margin-top: 10px;
+  padding: 10px 12px;
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
   font-size: 1rem;
   padding: 10px 12px;
   box-shadow: none;
@@ -93,9 +115,23 @@ input[type="file"] {
 }
 
 .cancelar-btn {
-  --background: var(--green-matcha-light);
-  --color: var(--green-matcha-dark);
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+  --color: var(--green-matcha-dark) !important;
+  color: var(--green-matcha-dark) !important;
   font-weight: 600;
+  border: 1.5px solid var(--green-matcha-dark);
+  border-radius: 12px;
+}
+
+.guardar-btn {
+  --background: var(--green-matcha-dark) !important;
+  background: var(--green-matcha-dark) !important;
+  --color: #fff !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: 1.5px solid var(--gray-bg);
+  border-radius: 12px;
 }
 
 ion-item ion-label + ion-datetime {
