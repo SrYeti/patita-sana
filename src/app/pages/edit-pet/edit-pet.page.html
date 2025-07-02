@@ -1,90 +1,88 @@
 <!-- Encabezado de la página de edición -->
-<ion-content>
-  <ion-header fill="clear" class="header" translucent="true">
-    <ion-toolbar class="header">
-      <ion-title class="header">Editar Mascota</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header fill="clear" class="header" translucent="true">
+  <ion-toolbar class="header">
+    <ion-title class="header">Editar Mascota</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <!-- Formulario de edición de mascota -->
-  <ion-content class="ion-padding" class="formulario" fill="clear">
-    <form *ngIf="mascota" (ngSubmit)="guardarCambios()">
-      <!-- Campo: Nombre -->
-      <ion-item class="input-item">
-        <ion-label position="floating" class="input-label">Nombre</ion-label>
-        <ion-input
-          type="text"
-          [(ngModel)]="nombre"
-          name="nombre"
-          required
-        ></ion-input>
-      </ion-item>
+<!-- Formulario de edición de mascota -->
+<ion-content class="ion-padding formulario" fill="clear">
+  <form *ngIf="mascota" (ngSubmit)="guardarCambios()">
+    <!-- Campo: Nombre -->
+    <ion-item class="input-item">
+      <ion-label position="floating" class="input-label">Nombre</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+      ></ion-input>
+    </ion-item>
 
-      <!-- Campo: Número de Ficha -->
-      <ion-item class="input-item">
-        <ion-label position="floating" class="input-label"
-          >Número de Ficha</ion-label
-        >
-        <ion-input
-          type="text"
-          [(ngModel)]="fichaNumero"
-          name="fichaNumero"
-        ></ion-input>
-      </ion-item>
+    <!-- Campo: Número de Ficha -->
+    <ion-item class="input-item">
+      <ion-label position="floating" class="input-label"
+        >Número de Ficha</ion-label
+      >
+      <ion-input
+        type="text"
+        [(ngModel)]="fichaNumero"
+        name="fichaNumero"
+      ></ion-input>
+    </ion-item>
 
-      <!-- Campo: Fecha de nacimiento -->
-      <ion-item class="input-item">
-        <ion-label position="stacked" class="input-label"
-          >Fecha de nacimiento</ion-label
-        >
-        <ion-datetime
-          presentation="date"
-          [(ngModel)]="fechaNacimiento"
-          name="fechaNacimiento"
-          required
-        >
-        </ion-datetime>
-      </ion-item>
+    <!-- Campo: Fecha de nacimiento -->
+    <ion-item class="input-item">
+      <ion-label position="stacked" class="input-label"
+        >Fecha de nacimiento</ion-label
+      >
+      <ion-datetime
+        presentation="date"
+        [(ngModel)]="fechaNacimiento"
+        name="fechaNacimiento"
+        required
+      >
+      </ion-datetime>
+    </ion-item>
 
-      <!-- Campo: Sexo -->
-      <ion-item class="input-item">
-        <ion-label position="floating" class="input-label">Sexo</ion-label>
-        <ion-select [(ngModel)]="sexo" name="sexo" required>
-          <ion-select-option value="Macho">Macho</ion-select-option>
-          <ion-select-option value="Hembra">Hembra</ion-select-option>
-        </ion-select>
-      </ion-item>
+    <!-- Campo: Sexo -->
+    <ion-item class="input-item">
+      <ion-label position="floating" class="input-label">Sexo</ion-label>
+      <ion-select [(ngModel)]="sexo" name="sexo" required>
+        <ion-select-option value="Macho">Macho</ion-select-option>
+        <ion-select-option value="Hembra">Hembra</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-      <!-- Campo: Peso -->
-      <ion-item class="input-item">
-        <ion-label position="floating" class="input-label">Peso (kg)</ion-label>
-        <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
-      </ion-item>
+    <!-- Campo: Peso -->
+    <ion-item class="input-item">
+      <ion-label position="floating" class="input-label">Peso (kg)</ion-label>
+      <ion-input type="number" [(ngModel)]="peso" name="peso"></ion-input>
+    </ion-item>
 
-      <!-- Campo: Foto -->
-      <ion-item class="input-item">
-        <ion-label position="stacked" class="input-label">Foto</ion-label>
-        <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
-      </ion-item>
-      <div class="acciones-group">
-        <!-- Botones de acción -->
-        <ion-button
-          expand="block"
-          type="submit"
-          class="guardar-button"
-          fill="clear"
-          >Guardar Cambios</ion-button
-        >
-        <ion-button
-          expand="block"
-          color="medium"
-          type="button"
-          (click)="cancelar()"
-          class="custom-button"
-          fill="clear"
-          >Cancelar</ion-button
-        >
-      </div>
-    </form>
-  </ion-content>
+    <!-- Campo: Foto -->
+    <ion-item class="input-item">
+      <ion-label position="stacked" class="input-label">Foto</ion-label>
+      <input type="file" accept="image/*" (change)="onFotoSelected($event)" />
+    </ion-item>
+    <div class="acciones-group">
+      <!-- Botones de acción -->
+      <ion-button
+        expand="block"
+        type="submit"
+        class="guardar-btn"
+        fill="clear"
+        >Guardar Cambios</ion-button
+      >
+      <ion-button
+        expand="block"
+        color="medium"
+        type="button"
+        (click)="cancelar()"
+        class="cancelar-btn"
+        fill="clear"
+        >Cancelar</ion-button
+      >
+    </div>
+  </form>
 </ion-content>

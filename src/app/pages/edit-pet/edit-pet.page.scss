@@ -18,8 +18,8 @@ ion-toolbar.header {
 form {
   width: 100%;
   max-width: 400px;
-  margin: 32px auto 0 auto;
-  padding: 24px 18px 32px 18px;
+  margin: 0 auto 0 auto;
+  padding: 8px 10px 20px 10px; // Igual que add-pet
   background: var(--gray-bg);
   border-radius: 18px;
   box-shadow: 0 2px 12px rgba(164, 192, 132, 0.08);
@@ -93,9 +93,23 @@ input[type="file"] {
 }
 
 .cancelar-btn {
-  --background: var(--green-matcha-light);
-  --color: var(--green-matcha-dark);
+  --background: var(--gray-bg) !important;
+  background: var(--gray-bg) !important;
+  --color: var(--green-matcha-dark) !important;
+  color: var(--green-matcha-dark) !important;
   font-weight: 600;
+  border: 1.5px solid var(--green-matcha-dark);
+  border-radius: 12px;
+}
+
+.guardar-btn {
+  --background: var(--green-matcha-dark) !important;
+  background: var(--green-matcha-dark) !important;
+  --color: #fff !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: 1.5px solid var(--gray-bg);
+  border-radius: 12px;
 }
 
 ion-item ion-label + ion-datetime {
