@@ -7,7 +7,9 @@ ion-toolbar.header {
   background: var(--gray-bg) !important;
   --color: var(--green-matcha-dark);
   color: var(--green-matcha-dark) !important;
-  box-shadow: none;
+  --border-width: 0 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 ion-menu,
@@ -172,4 +174,8 @@ ion-content {
   src: url("/assets/Poppins-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+}
+
+ion-menu-button {
+  --color: var(--green-matcha-dark) !important;
 }

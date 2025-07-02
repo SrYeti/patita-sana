@@ -10,7 +10,7 @@
 
     <form (ngSubmit)="onLogin()">
       <ion-item class="input-item">
-        <ion-label position="floating" class="input-label">Correo</ion-label>
+        <ion-label position="stacked" class="input-label">Correo</ion-label>
         <ion-input
           type="email"
           [(ngModel)]="email"
@@ -20,9 +20,7 @@
         ></ion-input>
       </ion-item>
       <ion-item class="input-item">
-        <ion-label position="floating" class="input-label"
-          >Contraseña</ion-label
-        >
+        <ion-label position="stacked" class="input-label">Contraseña</ion-label>
         <ion-input
           type="password"
           [(ngModel)]="password"

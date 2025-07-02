@@ -23,14 +23,13 @@
   transform-origin: left top !important;
   white-space: nowrap;
   font-weight: 500;
-  position: static !important;
   font-family: "Poppins", sans-serif !important;
 }
 
+/* Eliminar override que rompe el label flotante */
 ion-label[slot="floating"],
 .input-label.sc-ion-label-md-h {
-  position: static !important;
-  transform: none !important;
+  /* No forzar position ni transform aquí */
   margin-bottom: 8px !important;
 }
 
