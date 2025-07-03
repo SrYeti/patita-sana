@@ -1,5 +1,0 @@
-name = "patita-sana"
-compatibility_date = "2025-07-03"
-
-[site]
-bucket = "./www"
