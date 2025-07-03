@@ -1,5 +1,25 @@
 ion-content {
-  --background: #f8f8f0 !important; /* o el color que quieras */
+  --background: #f8f8f0 !important;
+  background: #f8f8f0 !important;
+}
+
+:host-context(ion-content) {
+  --background: #f8f8f0 !important;
+  background: #f8f8f0 !important;
+}
+
+ion-content::part(scroll) {
+  background: #f8f8f0 !important;
+}
+
+ion-content.dark,
+:host-context(.dark) ion-content {
+  --background: #f8f8f0 !important;
+  background: #f8f8f0 !important;
+}
+
+body {
+  background-color: #f8f8f0 !important;
 }
 
 .ion-card {

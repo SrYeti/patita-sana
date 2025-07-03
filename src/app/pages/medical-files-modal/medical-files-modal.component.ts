@@ -57,7 +57,7 @@ import { FormsModule } from '@angular/forms';
             ><br />
             <small>{{ doc.fecha_subida | date : 'short' }}</small>
           </ion-label>
-          <ion-button fill="clear" (click)="verPDF(doc.file_path)">
+          <ion-button fill="clear" (click)="verPDF(doc.url)">
             Ver PDF
           </ion-button>
         </ion-item>
